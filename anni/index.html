@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>АнНи — Студия красоты и косметологии</title>
+  <style>
+    /* --- CSS ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ --- */
+    :root {
+      --primary-color: #2C3C44;
+      --primary-rgb: 44, 60, 68;
+      --text-color: #333333;
+      --light-bg: #F4F6F7;
+      --white: #FFFFFF;
+      --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      --font-stack: -apple-system, BlinkMacSystemFont, "SF Compact Text", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* Принудительное обнуление межбуквенного интервала везде */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      letter-spacing: 0px !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: var(--font-stack);
+      color: var(--text-color);
+      background-color: var(--white);
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, textarea, select {
+      font-family: inherit;
+    }
+
+    /* --- ЛОАДЕР ПРИ ЗАГРУЗКЕ СТРАНИЦЫ (КАК НА СКРИНШОТЕ С ВЕРТИКАЛЬНОЙ ЛИНИЕЙ) --- */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--primary-color);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .loader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      width: 100%;
+      padding-top: 32vh; /* Позиция логотипа как на скриншоте */
+      position: relative;
+    }
+
+    .loader-logo-img {
+      max-width: 140px;
+      height: auto;
+      margin-bottom: 12px;
+    }
+
+    .loader-subtitle {
+      font-size: 0.55rem;
+      color: var(--white);
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 2px !important;
+      margin-bottom: 40px;
+    }
+
+    .loader-percentage {
+      font-size: 0.85rem;
+      color: var(--white);
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    /* Вертикальная полоса загрузки, уходящая в самый низ */
+    .loader-progress-container {
+      width: 2px;
+      height: calc(68vh - 120px); /* Тянется ровно до нижней границы экрана */
+      background-color: rgba(255, 255, 255, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loader-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0%; /* Заполняется сверху вниз */
+      background-color: var(--white);
+      transition: height 0.05s linear;
+    }
+
+    /* --- ФИКСИРОВАННЫЙ HEADER --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background-color: rgba(44, 60, 68, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .header-logo-img {
+      max-width: 105px;
+      height: auto;
+      display: block;
+    }
+
+    .header-contacts {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 0.65rem;
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    .header-contacts a {
+      margin-bottom: 2px;
+      opacity: 0.9;
+    }
+
+    /* Бургер */
+    .burger-menu {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px; /* Расстояние между текстом и линиями */
+      width: auto;
+      height: auto;
+      z-index: 1001;
+      margin-left: 35px; /* Увеличен зазор между телефоном и меню */
+    }
+
+    .burger-text {
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      transition: var(--transition-smooth);
+    }
+
+    .burger-lines {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 16px;
+    }
+
+    .burger-lines span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--white);
+      transition: var(--transition-smooth);
+    }
+
+    /* Поведение анимации в открытом состоянии */
+    .burger-menu.active .burger-lines span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .burger-menu.active .burger-lines span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger-menu.active .burger-lines span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    .burger-menu.active .burger-text {
+      opacity: 0.6;
+    }
+
+    /* Меню навигации с кнопкой выхода назад */
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--primary-color);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-100%);
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .nav-overlay.open {
+      transform: translateY(0);
+    }
+
+    .nav-back-btn {
+      position: absolute;
+      top: 22px;
+      left: 20px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0.8;
+    }
+
+    .nav-list {
+      list-style: none;
+      text-align: center;
+    }
+
+    .nav-item {
+      margin: 25px 0;
+    }
+
+    .nav-link {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--white);
+      transition: opacity 0.3s;
+    }
+
+    .nav-link:active {
+      opacity: 0.6;
+    }
+
+    /* --- ГЛАВНЫЙ ЭКРАН --- */
+    .hero {
+      margin-top: 70px;
+      height: calc(100vh - 70px);
+      min-height: 500px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--white);
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* Сплошной черный цвет с прозрачностью 55% для затемнения видео */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.55);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-logo-img {
+      max-width: 180px; /* Крупнее, как вы просили */
+      height: auto;
+      margin-bottom: 8px; /* Отступ до текста подписи */
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-subtitle-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 45px; /* Несколько отступов вниз до местоположения */
+      opacity: 0.9;
+      display: block;
+    }
+
+    .hero-address {
+      font-size: 0.9rem;
+      margin-top: 0;
+      margin-bottom: 45px; /* Отступ до кнопки */
+      opacity: 0.8;
+      max-width: 280px;
+      line-height: 1.4;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-cta {
+      background-color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      color: var(--white);
+      padding: 15px 45px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      font-weight: 500;
+    }
+
+    .btn-cta:active {
+      background-color: var(--white);
+      color: var(--primary-color);
+      border-color: var(--white);
+    }
+
+    /* --- КРУГ «О НАС» (ЗАМЕДЛЕННАЯ АНИМАЦИЯ ДО 1.8 СЕКУНД) --- */
+    .why-us {
+      padding: 60px 10px;
+      background-color: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Ширина расширена до 380px для обеспечения 34px зазора в центре */
+    .circle-container {
+      position: relative;
+      width: 100%;
+      max-width: 380px; /* Увеличено */
+      height: 310px;
+      margin: 20px auto 0;
+      transition: transform 0.3s ease;
+    }
+
+    /* Автоматическое масштабирование на ультра-маленьких экранах (iPhone SE) */
+    @media (max-width: 379px) {
+      .circle-container {
+        transform: scale(0.85);
+        transform-origin: center top;
+      }
+    }
+
+    /* Задний план: 3 концентрических круга, пересчитанных под новые размеры */
+    .circle-svg-concentric {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 320px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .circle-svg-concentric circle {
+      fill: none;
+      stroke: #E2E8F0;
+      stroke-width: 1px;
+    }
+
+    /* Плашки: 168px по оси X для свободного входа текста */
+    .why-card {
+      position: absolute;
+      width: 168px; /* Ширина плашки */
+      height: 95px;
+      background: #F3F4F6;
+      border-radius: 16px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border: none;
+      opacity: 0;
+      box-sizing: border-box;
+      z-index: 2;
+      /* Анимация замедлена до 1.8s с ультра-плавным замедлением */
+      transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease;
+    }
+
+    /* Шапка карточки */
+    .why-card-header {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: auto;
+      margin-bottom: 8px;
+      padding-right: 24px;
+    }
+
+    .why-card h4 {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      line-height: 1.25;
+      text-align: left;
+      margin-right: 22px;
+    }
+
+    /* Кружок с цифрой жестко зафиксирован в верхнем правом углу */
+    .why-card .num {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      background-color: var(--white);
+      color: var(--primary-color);
+      font-size: 0.6rem;
+      font-weight: 700;
+      border-radius: 50%;
+    }
+
+    .why-card p {
+      font-size: 0.58rem;
+      font-weight: 400;
+      color: #475569;
+      line-height: 1.3;
+      text-align: left;
+    }
+
+    /* Расширенные горизонтальные координаты */
+    .card-1 { left: 5px; top: 10px; transform: translate(-15px, -15px); }
+    .card-3 { right: 5px; top: 10px; transform: translate(15px, -15px); }
+    .card-2 { left: 5px; bottom: 10px; transform: translate(-15px, 15px); }
+    .card-4 { right: 5px; bottom: 10px; transform: translate(15px, 15px); }
+
+    /* Текст «ПОЧЕМУ МЫ?» зафиксирован строго в геометрическом центре кругов */
+    .central-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      z-index: 5;
+      text-align: center;
+      pointer-events: none;
+      /* Анимация заголовка также замедлена до 1.8s */
+      transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .central-circle h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    /* Активация анимации при скролле */
+    .why-us.animate .central-circle {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .why-us.animate .why-card {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    /* --- НАШИ УСЛУГИ (ДОБАВЛЕНА СВЕРХПЛАВНАЯ АНИМАЦИЯ ПОЯВЛЕНИЯ) --- */
+    .services {
+      padding: 60px 20px;
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .services-header {
+      margin-bottom: 30px;
+    }
+
+    .services-pretitle {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.55);
+      text-transform: lowercase;
+    }
+
+    .services-line {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.2);
+      margin: 8px 0 15px;
+    }
+
+    .services-title {
+      font-size: 2.2rem;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    /* Базовое скрытое состояние карточек */
+    .service-card {
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 2.2s ease;
+    }
+
+    /* Каскадная задержка для каждой карточки услуг */
+    .service-card:nth-child(2) { transition-delay: 0.1s; }
+    .service-card:nth-child(3) { transition-delay: 0.2s; }
+    .service-card:nth-child(4) { transition-delay: 0.3s; }
+
+    /* Появление при добавлении класса animate от Intersection Observer */
+    .services.animate .service-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-img-container {
+      position: relative;
+      aspect-ratio: 1 / 1.35;
+      border-radius: 20px;
+      overflow: hidden;
+      background-color: #cbd5e1;
+    }
+
+    /* Настройка плавного отображения пользовательских фото */
+    .service-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .service-arrow-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 30px;
+      height: 30px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--primary-color);
+      z-index: 3;
+    }
+
+    .service-arrow-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2.5;
+    }
+
+    .service-label {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--white);
+      text-align: center;
+    }
+
+    .btn-services-all {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background-color: var(--white);
+      border: 1px solid var(--white);
+      color: var(--primary-color);
+      padding: 15px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 15px;
+      margin-top: 10px;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-services-all:active {
+      background-color: transparent;
+      color: var(--white);
+    }
+
+    /* --- АКЦИИ --- */
+    .promo {
+      padding: 60px 0;
+      background-color: var(--white);
+    }
+
+    .promo-header {
+      padding: 0 20px;
+      margin-bottom: 25px;
+    }
+
+    .promo-pretitle {
+      font-size: 0.85rem;
+      color: rgba(44, 60, 68, 0.5);
+      text-transform: lowercase;
+    }
+
+    .promo-line {
+      width: 100%;
+      height: 1px;
+      background-color: rgba(44, 60, 68, 0.15);
+      margin: 8px 0 15px;
+    }
+
+    .promo-title {
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--primary-color);
+      line-height: 1.35;
+    }
+
+    .slider-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .slider-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .promo-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      padding: 0 20px;
+    }
+
+    .promo-card {
+      background-color: var(--light-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 25px;
+    }
+
+    .promo-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .promo-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: #777;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .promo-name {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .promo-packages {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .package-box {
+      border-top: 1px solid rgba(44, 60, 68, 0.15);
+      padding-top: 15px;
+    }
+
+    .package-box h5 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .package-desc {
+      font-size: 0.7rem;
+      color: #666;
+      line-height: 1.4;
+      margin-bottom: 15px;
+      min-height: 75px;
+    }
+
+    .package-price {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 8px;
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 25px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #cbd5e1;
+      transition: var(--transition-smooth);
+    }
+
+    .dot.active {
+      background-color: var(--primary-color);
+    }
+
+    /* --- ГАЛЕРЕЯ РАБОТ --- */
+    .gallery {
+      padding: 60px 0;
+      background-color: var(--light-bg);
+      overflow: hidden;
+    }
+
+    .gallery-title {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      font-weight: 300;
+      color: var(--primary-color);
+      padding: 0 20px;
+      margin-bottom: 25px;
+    }
+
+    .gallery-carousel-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .gallery-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 10%;
+    }
+
+    .gallery-slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-item {
+      flex: 0 0 80%;
+      margin: 0 10px;
+      scroll-snap-align: center;
+      aspect-ratio: 4/5;
+      background-color: #cbd5e1;
+      position: relative;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s;
+      opacity: 0.7;
+    }
+
+    .gallery-item.active {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 25px;
+      display: block;
+    }
+
+    .gallery-nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 25px;
+      margin-bottom: 30px;
+    }
+
+    .gallery-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: var(--white);
+      border: 1px solid rgba(44, 60, 68, 0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .btn-gallery-more {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 0 auto;
+      text-align: center;
+      background-color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      color: var(--white);
+      padding: 16px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      border-radius: 15px;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-gallery-more:active {
+      opacity: 0.8;
+    }
+
+    /* --- ОТЗЫВЫ --- */
+    .reviews {
+      padding: 60px 20px;
+      background-color: var(--white);
+    }
+
+    .reviews-title {
+      font-size: 2.2rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      margin-bottom: 30px;
+    }
+
+    .reviews-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      gap: 15px;
+      padding: 5px 0;
+    }
+
+    .reviews-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .review-card {
+      flex: 0 0 90%;
+      scroll-snap-align: center;
+      border: 1px solid var(--primary-color);
+      border-radius: 20px;
+      padding: 20px;
+      background-color: var(--white);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .review-user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .review-avatar-placeholder {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      overflow: hidden;
+    }
+
+    .review-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .review-author-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      line-height: 1.2;
+    }
+
+    .yandex-badge {
+      background-color: transparent;
+      border: none;
+      border-radius: none;
+      padding: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: none;
+    }
+
+    .yandex-badge-img {
+      height: 80px;
+      width: auto;
+      display: block;
+    }
+
+    .review-stars {
+      color: var(--primary-color);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+
+    .review-body-text {
+      font-size: 0.75rem;
+      color: #333;
+      line-height: 1.45;
+    }
+
+    .reviews-arrows {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    .review-arrow-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--white);
+      border: none;
+      color: var(--white);
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .review-arrow-btn:active {
+      opacity: 0.85;
+    }
+
+    /* --- ФОРМА КОНСУЛЬТАЦИИ --- */
+    .consultation {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 60px 20px;
+    }
+
+    .consultation h3 {
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .consultation p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      color: var(--white);
+      padding: 12px 0;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 0;
+      font-size: 0.95rem;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-select option {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background-color: var(--white);
+      color: var(--primary-color);
+      border: none;
+      padding: 16px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 15px;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-submit:active {
+      opacity: 0.8;
+    }
+
+    /* --- КОНТАКТЫ --- */
+    .contacts {
+      padding: 60px 20px 40px;
+      background-color: var(--white);
+    }
+
+    .contacts-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .contacts-text-side {
+      flex: 0 0 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .contacts-main-title {
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      margin-bottom: 18px;
+    }
+
+    .info-label {
+      font-size: 0.72rem;
+      color: #777;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .contacts-phones {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 5px;
+    }
+
+    .contacts-logo-img {
+      max-width: 160px; /* Крупный размер лого */
+      height: auto;
+      display: block;
+    }
+
+    .contacts-logo-area {
+      margin-top: auto;
+      padding-top: 15px;
+    }
+
+    .contacts-image-side {
+      flex: 0 0 42%;
+      position: relative;
+    }
+
+    .contacts-salon-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .contacts-salon-photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 250px;
+      background-color: #cbd5e1;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #f1f5f9 0%, #cbd5e1 100%);
+      color: var(--primary-color);
+      text-align: center;
+      padding: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+
+    .map-placeholder svg {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 10px;
+      fill: var(--primary-color);
+    }
+
+    .map-iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .map-container.loaded .map-placeholder {
+      display: none;
+    }
+
+    .map-container.loaded .map-iframe {
+      opacity: 1;
+    }
+
+    footer {
+      background-color: var(--white);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: #999;
+      border-top: 1px solid rgba(44, 60, 68, 0.1);
+    }
+
+    /* --- ПОП-АП (МОДАЛЬНАЯ ФОРМА ЗАПИСИ) --- */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(44, 60, 68, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background-color: var(--primary-color);
+      color: var(--white);
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 25px;
+      position: relative;
+      border-radius: 20px;
+      transform: translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal.open .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal h3 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .modal p {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ЛОАДЕР (ИНТЕРАКТИВНЫЙ ПОЛЗУНОК КАК НА СКРИНШОТЕ) -->
+  <div id="loader">
+    <div class="loader-content">
+      <img src="light.png" alt="АнНи" class="loader-logo-img">
+      <p class="loader-subtitle">СТУДИЯ КРАСОТЫ И КОСМЕТОЛОГИИ</p>
+      <div class="loader-percentage" id="loaderPercent">0%</div>
+      <div class="loader-progress-container">
+        <div class="loader-progress-bar" id="loaderBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ФИКСИРОВАННЫЙ HEADER -->
+  <header>
+    <div class="header-logo">
+      <!-- ЛОГОТИП В ШАПКЕ -->
+      <img src="light.png" alt="АнНи" class="header-logo-img">
+    </div>
+    <div class="header-contacts">
+      <a href="tel:+79312440340">+7 (931) 244-03-40</a>
+      <a href="tel:+78123687547">+7 (812) 368-75-47</a>
+    </div>
+    <button class="burger-menu" id="burgerBtn" aria-label="Открыть меню">
+      <span class="burger-text">Меню</span>
+      <span class="burger-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+  </header>
+
+  <!-- МОБИЛЬНОЕ МЕНЮ -->
+  <div class="nav-overlay" id="navOverlay">
+    <button class="nav-back-btn" id="navBackBtn">✕ Назад</button>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="#" class="nav-link" id="linkPrices">Цены</a></li>
+      <li class="nav-item"><a href="#" class="nav-link" id="linkServices">Услуги</a></li>
+      <li class="nav-item"><a href="#why-us" class="nav-link" id="linkAbout">О нас</a></li>
+      <li class="nav-item"><a href="#contacts" class="nav-link" id="linkContacts">Контакты</a></li>
+    </ul>
+  </div>
+
+  <!-- ГЛАВНЫЙ ЭКРАН -->
+  <section class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <!-- ССЫЛКА НА ВИДЕО ДЛЯ ФОНА ГЛАВНОЙ СТРАНИЦЫ (MP4) -->
+      <source src="vid.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    
+    <div class="hero-content">
+      <!-- КРУПНЫЙ ЛОГОТИП ПО ЦЕНТРУ -->
+      <img src="light.png" alt="АнНи" class="hero-logo-img">
+  
+      <!-- ПОДПИСЬ СТРОГО ПОД ЛОГОТИПОМ -->
+      <p class="hero-subtitle-text">СТУДИЯ КРАСОТЫ И КОСМЕТОЛОГИИ</p>
+  
+      <!-- АДРЕС С ОТСТУПОМ НИЖЕ -->
+      <p class="hero-address">ул. Маршала Захарова, 62, корп. 1</p>
+  
+      <!-- КНОПКА ЗАПИСАТЬСЯ ЕЩЕ НИЖЕ -->
+      <button class="btn-cta open-booking-btn">Записаться</button>
+    </div>
+  </section>
+
+  <!-- ПОЧЕМУ МЫ (ПОЛНОСТЬЮ ИСПРАВЛЕННЫЙ ВЫВЕРЕННЫЙ БЛОК, ГОРИЗОНТАЛЬНЫЙ ЗАЗОР 34PX) -->
+  <section class="why-us" id="why-us">
+    <div class="circle-container">
+      <!-- Задний план: Ровно 3 концентрических круга -->
+      <div class="circle-svg-concentric">
+        <svg viewBox="0 0 380 310" width="100%" height="100%">
+          <circle cx="190" cy="155" r="140" stroke="#E2E8F0" stroke-width="1" fill="none" />
+          <circle cx="190" cy="155" r="110" stroke="#E2E8F0" stroke-width="1" fill="none" />
+          <circle cx="190" cy="155" r="80" stroke="#E2E8F0" stroke-width="1" fill="none" />
+        </svg>
+      </div>
+
+      <!-- Сетка для ровного размещения заголовка строго по центру -->
+      <div class="why-grid">
+        
+        <!-- Левая колонка, Верх (Блок 01) -->
+        <div class="why-card card-1">
+          <div class="why-card-header">
+            <h4>Опытные мастера</h4>
+            <div class="num">01</div>
+          </div>
+          <p>Наши специалисты обладают высоким профессионализмом и знают все тонкости своего дела</p>
+        </div>
+
+        <!-- Главный надпись «ПОЧЕМУ МЫ?» строго по центру кругов -->
+        <div class="central-circle">
+          <h3>ПОЧЕМУ<br>МЫ?</h3>
+        </div>
+
+        <!-- Правая колонка, Верх (Блок 03) -->
+        <div class="why-card card-3">
+          <div class="why-card-header">
+            <h4>Широкий спектр услуг</h4>
+            <div class="num">03</div>
+          </div>
+          <p>От косметологии лица и тела до бьюти-услуг: волос, ногтей, бровей и массажа</p>
+        </div>
+
+        <!-- Левая колонка, Низ (Блок 02) -->
+        <div class="why-card card-2">
+          <div class="why-card-header">
+            <h4>Более 15 лет</h4>
+            <div class="num">02</div>
+          </div>
+          <p>Заботимся о вашей красоте, создавая неповторимый и совершенный образ</p>
+        </div>
+
+        <!-- Правая колонка, Низ (Блок 04) -->
+        <div class="why-card card-4">
+          <div class="why-card-header">
+            <h4>Сервис и качество</h4>
+            <div class="num">04</div>
+          </div>
+          <p>Уютная атмосфера, доброжелательность и чуткое отношение к каждому гостю</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- НАШИ УСЛУГИ -->
+  <section class="services">
+    <div class="services-header">
+      <span class="services-pretitle">Выберите раздел</span>
+      <div class="services-line"></div>
+      <h2 class="services-title">Наши услуги</h2>
+    </div>
+    
+    <div class="services-grid">
+      <!-- Услуга 1 -->
+      <div class="service-card">
+        <div class="service-img-container">
+          <!-- КАРТИНКА УСЛУГИ 1 -->
+          <img src="photo_3_2026-07-15_20-12-13.jpg" class="service-img" alt="Парикмахерский зал">
+          <span class="service-arrow-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </span>
+        </div>
+        <h3 class="service-label">Парикмахерский зал</h3>
+      </div>
+
+      <!-- Услуга 2 -->
+      <div class="service-card">
+        <div class="service-img-container">
+          <!-- КАРТИНКА УСЛУГИ 2 -->
+          <img src="photo_6_2026-07-15_20-12-13.jpg" class="service-img" alt="Ногтевой сервис">
+          <span class="service-arrow-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </span>
+        </div>
+        <h3 class="service-label">Ногтевой сервис</h3>
+      </div>
+
+      <!-- Услуга 3 -->
+      <div class="service-card">
+        <div class="service-img-container">
+          <!-- КАРТИНКА УСЛУГИ 3 -->
+          <img src="photo_11_2026-07-15_20-12-13.jpg" class="service-img" alt="Косметология тела">
+          <span class="service-arrow-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </span>
+        </div>
+        <h3 class="service-label">Косметология тела</h3>
+      </div>
+
+      <!-- Услуга 4 -->
+      <div class="service-card">
+        <div class="service-img-container">
+          <!-- КАРТИНКА УСЛУГИ 4 -->
+          <img src="photo_2_2026-07-15_20-12-13.jpg" class="service-img" alt="Косметология лица">
+          <span class="service-arrow-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </span>
+        </div>
+        <h3 class="service-label">Косметология лица</h3>
+      </div>
+    </div>
+    
+    <button class="btn-services-all">Смотреть все услуги</button>
+  </section>
+
+  <!-- АКЦИИ -->
+  <section class="promo">
+    <div class="promo-header">
+      <span class="promo-pretitle">Акции</span>
+      <div class="promo-line"></div>
+      <h2 class="promo-title">ЗАБОТА О СЕБЕ: РОСКОШЬ ДОСТУПНАЯ КАЖДОМУ</h2>
+    </div>
+    
+    <div class="slider-container" id="promoSlider">
+      <!-- Слайд 1 -->
+      <div class="promo-slide">
+        <div class="promo-card">
+          <img src="photo_10_2026-07-15_20-12-13.jpg" class="promo-img" alt="Программа Гидрорезерв">
+          <span class="promo-tag">Спецпредложение</span>
+          <h4 class="promo-name">Программа Гидрорезерв</h4>
+          <div class="promo-packages">
+            <div class="package-box">
+              <h5>Пакет Оптимум</h5>
+              <p class="package-desc">УЗ-пилинг, безинъекционная биоревитализация, увлажняющая маска</p>
+              <div class="package-price">3 400 Р</div>
+            </div>
+            <div class="package-box">
+              <h5>Пакет Премиум</h5>
+              <p class="package-desc">УЗ-пилинг, безинъекционная биоревитализация, альгинатная маска</p>
+              <div class="package-price">3 700 Р</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Слайд 2 -->
+      <div class="promo-slide">
+        <div class="promo-card">
+          <img src="photo_11_2026-07-15_20-12-13.jpg" class="promo-img" alt="Моделирующий массаж LPG">
+          <span class="promo-tag">Курс процедур</span>
+          <h4 class="promo-name">Моделирующий массаж LPG</h4>
+          <div class="package-box" style="margin-top: 10px;">
+            <h5>Абонемент на 10 сеансов</h5>
+            <p class="package-desc">Эффективный курс для коррекции фигуры, уменьшения объемов и борьбы с несовершенствами кожи</p>
+            <div class="package-price">9 900 Р</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="slider-dots" id="promoDots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+    </div>
+  </section>
+
+  <!-- ГАЛЕРЕЯ РАБОТ -->
+  <section class="gallery">
+    <h2 class="gallery-title">Галерея работ</h2>
+    
+    <div class="gallery-carousel-wrapper">
+      <div class="gallery-slider" id="gallerySlider">
+        <div class="gallery-item">
+          <img src="photo_8_2026-07-15_20-12-13.jpg" class="gallery-img" alt="Работа 1">
+        </div>
+        <div class="gallery-item active">
+          <img src="photo_9_2026-07-15_20-12-13.jpg" class="gallery-img" alt="Работа 2">
+        </div>
+        <div class="gallery-item">
+          <img src="photo_5_2026-07-15_20-12-13.jpg" class="gallery-img" alt="Работа 3">
+        </div>
+      </div>
+      
+      <div class="gallery-nav">
+        <button class="gallery-btn" id="galleryPrev" aria-label="Назад">←</button>
+        <button class="gallery-btn" id="galleryNext" aria-label="Вперед">→</button>
+      </div>
+    </div>
+
+    <button class="btn-gallery-more">Смотреть больше работ</button>
+  </section>
+
+  <!-- ОТЗЫВЫ -->
+  <section class="reviews">
+    <h2 class="reviews-title">Отзывы</h2>
+    
+    <div class="reviews-scroll" id="reviewsScroll">
+      <!-- Отзыв 1 -->
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-user-info">
+            <div class="review-avatar-placeholder">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" class="review-avatar" alt="Алла Ходак">
+            </div>
+            <div class="review-author-name">АЛЛА<br>ХОДАК</div>
+          </div>
+          <div class="yandex-badge">
+            <span class="yandex-pin"></span>
+            <img src="IMG_8558.PNG" class="yandex-badge-img" alt="яндекс карты">
+          </div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-body-text">Очень рада,что открыла для себя прекрасный салон красоты АнНи! Вежливый персонал, всегда приятная атмосфера, свежий ремонт. Я посещаю косметолога Анну -огромная благодарность за высокий профессионализм и мастерство! В умелых руках Натальи на процедуре lpg ощущаешь всю прелесть этого массажа.</p>
+      </div>
+      
+      <!-- Отзыв 2 -->
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-user-info">
+            <div class="review-avatar-placeholder">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces" class="review-avatar" alt="Елена Барк">
+            </div>
+            <div class="review-author-name">ЕЛЕНА<br>БАРК</div>
+          </div>
+          <div class="yandex-badge">
+            <span class="yandex-pin"></span>
+            <img src="IMG_8558.PNG" class="yandex-badge-img" alt="яндекс карты">
+          </div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-body-text">Прекрасный салон красоты. Пользуюсь услугами почти 18 лет. Всё устраивает: выполнение стрижки, окрашивание, маникюр, педикюр, косметология. Мастера все опытны, компетентны, дают советы с толком. Цены соответствуют качеству услуг.</p>
+      </div>
+    </div>
+
+    <div class="reviews-arrows">
+      <button class="review-arrow-btn" id="reviewsPrev" aria-label="Предыдущий отзыв">←</button>
+      <button class="review-arrow-btn" id="reviewsNext" aria-label="Следующий отзыв">→</button>
+    </div>
+  </section>
+
+  <!-- ФОРМА КОНСУЛЬТАЦИИ -->
+  <section class="consultation">
+    <h3>Нужна консультация?</h3>
+    <p>Оставьте заявку, и наш администратор ответит на любые вопросы или поможет подобрать услугу</p>
+    
+    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Заявка успешно отправлена!');">
+      <div class="form-group">
+        <input type="text" class="form-input" placeholder="Ваше имя" required>
+      </div>
+      <div class="form-group">
+        <input type="tel" class="form-input" placeholder="Номер телефона" required>
+      </div>
+      <div class="form-group">
+        <select class="form-select">
+          <option value="" disabled selected>Какая услуга интересует</option>
+          <option value="hair">Парикмахерский зал</option>
+          <option value="nails">Ногтевой сервис</option>
+          <option value="body">Косметология тела</option>
+          <option value="face">Косметология лица</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Оставить заявку</button>
+    </form>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section class="contacts" id="contacts">
+    <div class="contacts-row">
+      <div class="contacts-text-side">
+        <h2 class="contacts-main-title">Контакты</h2>
+        
+        <div class="info-item">
+          <div class="info-label">Режим работы:</div>
+          <div class="info-value">Ежедневно с 10:00 до 21:00</div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-label">Адрес: г. Санкт-Петербург ул.</div>
+          <div class="info-value">Маршала Захарова, 62, корп. 1,</div>
+        </div>
+        
+        <div class="info-item">
+          <div class="contacts-phones">
+            <a href="tel:+79312440340" class="info-value">+7 (931) 244-03-40</a>
+            <a href="tel:+78123687547" class="info-value">+7 (812) 368-75-47</a>
+          </div>
+        </div>
+
+        <div class="contacts-logo-area">
+          <img src="dark.png" alt="АнНи" class="contacts-logo-img">
+        </div>
+      </div>
+
+      <div class="contacts-image-side">
+        <div class="contacts-salon-photo">
+          <img src="photo_7_2026-07-15_20-12-13.jpg" class="contacts-salon-photo-img" alt="Салон красоты АнНи">
+        </div>
+      </div>
+    </div>
+    
+    <div class="map-container" id="mapContainer">
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        <span style="font-size: 0.85rem; font-weight: 500;">Нажмите для загрузки карты</span>
+      </div>
+      <iframe class="map-iframe" data-src="https://yandex.ru/map-widget/v1/?um=constructor%3A7a1498b89f8f2b7fbc41029053ea6725357c917246607e4125b2931448bdfb5b&amp;source=constructor" width="100%" height="250" frameborder="0"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Студия красоты и косметологии «АнНи»</p>
+  </footer>
+
+  <!-- ПОП-АП (МОДАЛЬНАЯ ФОРМА ЗАПИСИ) -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h3>Записаться на сеанс</h3>
+      <p>Оставьте ваши контакты, и мы перезвоним для подтверждения записи</p>
+      
+      <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Вы успешно записаны!'); document.getElementById('bookingModal').classList.remove('open');">
+        <div class="form-group">
+          <input type="text" class="form-input" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" class="form-input" placeholder="Номер телефона" required>
+        </div>
+        <div class="form-group">
+          <select class="form-select">
+            <option value="" disabled selected>Какая услуга интересует</option>
+            <option value="hair">Парикмахерский зал</option>
+            <option value="nails">Ногтевой сервис</option>
+            <option value="body">Косметология тела</option>
+            <option value="face">Косметология лица</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">Отправить запрос</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. АНИМАЦИЯ ИСЧЕЗНОВЕНИЯ ЛОАДЕРА (ИНТЕРАКТИВНЫЙ ПОЛЗУНОК КАК НА СКРИНШОТЕ)
+      const loader = document.getElementById('loader');
+      const loaderPercent = document.getElementById('loaderPercent');
+      const loaderBar = document.getElementById('loaderBar');
+      let progress = 0;
+
+      const progressInterval = setInterval(() => {
+        // Случайный прирост для реалистичности
+        progress += Math.floor(Math.random() * 5) + 3;
+        
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(progressInterval);
+          loaderPercent.textContent = '100%';
+          loaderBar.style.height = '100%';
+          
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+          }, 400); // Небольшая задержка перед полным сокрытием
+        } else {
+          loaderPercent.textContent = progress + '%';
+          loaderBar.style.height = progress + '%';
+        }
+      }, 40); // Плавная загрузка примерно за 1.5 секунды
+
+      // 2. БУРГЕР МЕНЮ И НАВИГАЦИЯ
+      const burgerBtn = document.getElementById('burgerBtn');
+      const navOverlay = document.getElementById('navOverlay');
+      const navBackBtn = document.getElementById('navBackBtn');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      function toggleMenu() {
+        burgerBtn.classList.toggle('active');
+        navOverlay.classList.toggle('open');
+        document.body.style.overflow = navOverlay.classList.contains('open') ? 'hidden' : '';
+      }
+
+      burgerBtn.addEventListener('click', toggleMenu);
+      navBackBtn.addEventListener('click', toggleMenu);
+
+      navOverlay.addEventListener('click', (e) => {
+        if (e.target === navOverlay) {
+          toggleMenu();
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          
+          if (href.startsWith('#')) {
+            e.preventDefault();
+            toggleMenu();
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              setTimeout(() => {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+              }, 400);
+            }
+          } else {
+            toggleMenu();
+          }
+        });
+      });
+
+      // 3. ПОП-АП (МОДАЛЬНОЕ ОКНО) ПО КНОПКЕ "ЗАПИСАТЬСЯ"
+      const bookingModal = document.getElementById('bookingModal');
+      const openModalBtns = document.querySelectorAll('.open-booking-btn');
+      const modalClose = document.getElementById('modalClose');
+
+      openModalBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          bookingModal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeModal() {
+        bookingModal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      modalClose.addEventListener('click', closeModal);
+      bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) {
+          closeModal();
+        }
+      });
+
+      // 4. ИНТЕРСЕКШН ОБСЕРВЕР ДЛЯ АНИМАЦИИ КРУГА "ПОЧЕМУ МЫ"
+      const whyUsSection = document.getElementById('why-us');
+      const observerOptions = {
+        root: null,
+        threshold: 0.15
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            whyUsSection.classList.add('animate');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      observer.observe(whyUsSection);
+
+      // 5. ИНТЕРСЕКШН ОБСЕРВЕР ДЛЯ АНИМАЦИИ КАРТОЧЕК "НАШИ УСЛУГИ"
+      const servicesSection = document.querySelector('.services');
+      const servicesObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            servicesSection.classList.add('animate');
+            servicesObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      servicesObserver.observe(servicesSection);
+
+      // 6. SWIPE-СЛАЙДЕР ДЛЯ АКЦИЙ
+      const promoSlider = document.getElementById('promoSlider');
+      const promoDots = document.querySelectorAll('#promoDots .dot');
+
+      promoSlider.addEventListener('scroll', () => {
+        const width = promoSlider.offsetWidth;
+        const scrollLeft = promoSlider.scrollLeft;
+        const activeIndex = Math.round(scrollLeft / width);
+        
+        promoDots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === activeIndex);
+        });
+      });
+
+      // 7. ИНТЕЛЛЕКТУАЛЬНЫЙ СЛАЙДЕР ГАЛЕРЕИ (МАСШТАБИРОВАНИЕ / SCALE)
+      const gallerySlider = document.getElementById('gallerySlider');
+      const galleryItems = gallerySlider.querySelectorAll('.gallery-item');
+      const btnPrev = document.getElementById('galleryPrev');
+      const btnNext = document.getElementById('galleryNext');
+
+      function updateActiveGallerySlide() {
+        const sliderCenter = gallerySlider.getBoundingClientRect().left + gallerySlider.offsetWidth / 2;
+        let minDistance = Infinity;
+        let activeItem = null;
+
+        galleryItems.forEach(item => {
+          const rect = item.getBoundingClientRect();
+          const itemCenter = rect.left + rect.width / 2;
+          const distance = Math.abs(sliderCenter - itemCenter);
+
+          if (distance < minDistance) {
+            minDistance = distance;
+            activeItem = item;
+          }
+        });
+
+        galleryItems.forEach(item => {
+          item.classList.toggle('active', item === activeItem);
+        });
+      }
+
+      gallerySlider.addEventListener('scroll', updateActiveGallerySlide);
+
+      btnNext.addEventListener('click', () => {
+        const step = galleryItems[0].offsetWidth + 20;
+        gallerySlider.scrollBy({ left: step, behavior: 'smooth' });
+      });
+
+      btnPrev.addEventListener('click', () => {
+        const step = galleryItems[0].offsetWidth + 20;
+        gallerySlider.scrollBy({ left: -step, behavior: 'smooth' });
+      });
+
+      setTimeout(updateActiveGallerySlide, 500);
+
+      // 8. СЛАЙДЕР ОТЗЫВОВ
+      const reviewsScroll = document.getElementById('reviewsScroll');
+      const reviewsPrev = document.getElementById('reviewsPrev');
+      const reviewsNext = document.getElementById('reviewsNext');
+
+      reviewsNext.addEventListener('click', () => {
+        const step = reviewsScroll.querySelector('.review-card').offsetWidth + 15;
+        reviewsScroll.scrollBy({ left: step, behavior: 'smooth' });
+      });
+
+      reviewsPrev.addEventListener('click', () => {
+        const step = reviewsScroll.querySelector('.review-card').offsetWidth + 15;
+        reviewsScroll.scrollBy({ left: -step, behavior: 'smooth' });
+      });
+
+      // 9. ЛЕНИВАЯ ЗАГРУЗКА ЯНДЕКС КАРТЫ
+      const mapContainer = document.getElementById('mapContainer');
+      const mapIframe = mapContainer.querySelector('.map-iframe');
+
+      mapContainer.addEventListener('click', function loadMap() {
+        if (!mapContainer.classList.contains('loaded')) {
+          const src = mapIframe.getAttribute('data-src');
+          mapIframe.setAttribute('src', src);
+          mapContainer.classList.add('loaded');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
