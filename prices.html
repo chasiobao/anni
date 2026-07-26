@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Цены — Студия красоты и косметологии АнНи</title>
+  <style>
+  
+    /* --- CSS ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ --- */
+    :root {
+      --primary-color: #23403C;
+      --primary-rgb: 35, 64, 60;
+      --text-color: #333333;
+      --light-bg: #F4F6F7;
+      --white: #FFFFFF;
+      --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      --font-stack: -apple-system, BlinkMacSystemFont, "SF Compact Text", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      letter-spacing: 0px !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: var(--font-stack);
+      color: var(--text-color);
+      background-color: var(--white);
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
+    }
+
+    /* --- ФИКСИРОВАННЫЙ HEADER --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background-color: rgba(35, 64, 60, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .header-logo-img {
+      max-width: 105px;
+      height: auto;
+      display: block;
+    }
+
+    .header-contacts {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    .header-contacts a {
+      margin-bottom: 2px;
+      opacity: 0.9;
+    }
+
+    .burger-menu {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+      width: auto;
+      height: auto;
+      z-index: 1001;
+      margin-left: 35px;
+    }
+
+    .burger-text {
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      transition: var(--transition-smooth);
+    }
+
+    .burger-lines {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 16px;
+    }
+
+    .burger-lines span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--white);
+      transition: var(--transition-smooth);
+    }
+
+    .burger-menu.active .burger-lines span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .burger-menu.active .burger-lines span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger-menu.active .burger-lines span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .burger-menu.active .burger-text {
+      opacity: 0.6;
+    }
+
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--primary-color);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-100%);
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .nav-overlay.open {
+      transform: translateY(0);
+    }
+
+    .nav-back-btn {
+      position: absolute;
+      top: 22px;
+      left: 20px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0.8;
+    }
+
+    .nav-list {
+      list-style: none;
+      text-align: center;
+    }
+
+    .nav-item {
+      margin: 25px 0;
+    }
+
+    .nav-link {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--white);
+      transition: opacity 0.3s;
+    }
+
+    .nav-link:active {
+      opacity: 0.6;
+    }
+
+    /* --- СЕКЦИЯ С ЦЕНАМИ --- */
+    .prices-page {
+      margin-top: 70px;
+      padding: 40px 20px 60px;
+      background-color: var(--white);
+    }
+
+    .breadcrumbs {
+      font-size: 0.8rem;
+      color: #777;
+      margin-bottom: 15px;
+      text-transform: none;
+    }
+
+    .breadcrumbs a {
+      color: #999;
+      transition: color 0.3s;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary-color);
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      margin-bottom: 35px;
+      text-align: left;
+    }
+
+    /* --- СТИЛИ ДЛЯ ИНТЕРАКТИВНОГО АККОРДЕОНА --- */
+    .accordion-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .acc-item {
+      border-bottom: 1px solid rgba(35, 64, 60, 0.15);
+    }
+
+    .acc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      font-size: 1.4rem;
+      color: var(--primary-color);
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .acc-icon {
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--primary-color);
+      transition: transform 0.4s ease;
+      line-height: 1;
+    }
+
+    .acc-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .acc-item.active .acc-content {
+      max-height: 5000px;
+    }
+
+    .acc-item.active .acc-icon {
+      transform: rotate(45deg);
+    }
+
+    /* --- СТИЛИЗАЦИЯ ТАБЛИЦ --- */
+    .table-section-title {
+      background-color: var(--primary-color);
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 12px;
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 25px;
+    }
+
+    .price-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      color: #333;
+      min-width: 340px;
+    }
+
+    .price-table th {
+      background-color: rgba(35, 64, 60, 0.05);
+      color: var(--primary-color);
+      text-align: center;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(35, 64, 60, 0.15);
+      white-space: nowrap;
+    }
+
+    .price-table th:first-child {
+      text-align: left;
+    }
+
+    .price-table td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(35, 64, 60, 0.08);
+      vertical-align: middle;
+    }
+
+    .price-table tr:nth-child(even) {
+      background-color: #FAFAFA;
+    }
+
+    .service-name {
+      font-weight: 500;
+      color: var(--primary-color);
+      text-align: left;
+    }
+
+    .service-desc {
+      font-size: 0.65rem;
+      color: #777;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .service-price-cell {
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary-color);
+      white-space: nowrap;
+    }
+
+    .table-footnote {
+      font-size: 0.7rem;
+      color: #777;
+      padding: 8px 10px;
+      font-style: italic;
+    }
+
+    /* --- ФОРМА КОНСУЛЬТАЦИИ --- */
+    .consultation {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 60px 20px;
+    }
+
+    .consultation h3 {
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .consultation p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      color: var(--white);
+      padding: 12px 0;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 0;
+      font-size: 0.95rem;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-select option {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    /* --- КНОПКИ НА БЕЛОМ ФОНЕ (СТАНОВЯТСЯ ЗЕЛЕНЫМИ С БЕЛЫМ ТЕКСТОМ) --- */
+    .map-overlay-card .btn-gold-gradient {
+      background: var(--primary-color) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
+      text-shadow: none !important;
+      border-radius: 15px !important;
+    }
+    .map-overlay-card .btn-gold-gradient:active {
+      opacity: 0.9 !important;
+    }
+
+    /* --- КНОПКИ НА ЗЕЛЕНОМ ФОНЕ (СТАНОВЯТСЯ БЕЛЫМИ С ЗЕЛЕНЫМ ТЕКСТОМ) --- */
+    .btn-submit,
+    .btn-promo-banner {
+      width: 100%;
+      background: var(--white) !important;
+      color: var(--primary-color) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+      text-shadow: none !important;
+      border-radius: 15px !important;
+      padding: 16px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .btn-submit:active,
+    .btn-promo-banner:active {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    /* --- КОНТАКТЫ (ОБНОВЛЕНО) --- */
+    /* --- КОНТАКТЫ (ОБНОВЛЕНО: ВЫРАВНИВАНИЕ ПО ЛЕВОМУ КРАЮ) --- */
+    .contacts {
+      padding: 60px 20px 0px;
+      background-color: var(--white);
+    }
+
+    .contacts-row {
+      display: flex;
+      justify-content: flex-start;
+      /* Выравнивание контейнера по левому краю */
+      align-items: stretch;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .contacts-text-side {
+      flex: 0 0 100%;
+      text-align: left;
+      /* Текст прижат к левому краю */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      /* Элементы внутри колонки прижаты влево */
+    }
+
+    .contacts-sub-title-main {
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      text-align: left;
+      /* Заголовок прижат влево */
+    }
+
+    .info-item {
+      margin-bottom: 18px;
+      text-align: left;
+      /* Текст пунктов прижат влево */
+    }
+
+    .info-label {
+      font-size: 0.72rem;
+      color: #777;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      text-align: left;
+      /* Подписи прижаты влево */
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      font-weight: 500;
+      line-height: 1.4;
+      text-align: left;
+      /* Значения прижаты влево */
+    }
+
+    .contacts-phones {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 5px;
+      align-items: flex-start;
+      /* Номера телефонов выровнены по левому краю */
+    }
+
+    .map-container {
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      margin-right: -20px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0px;
+      box-shadow: none;
+    }
+
+    .map-overlay-card {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      transform: none;
+      width: calc(100% - 40px);
+      max-width: 280px;
+      background-color: var(--white);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      z-index: 5;
+      text-align: center;
+    }
+
+    .map-overlay-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+
+    .map-overlay-card p {
+      font-size: 0.72rem;
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.35;
+    }
+
+    /* Кнопка на островке карты (зеленая) */
+    .map-overlay-card .btn-gold-gradient {
+      width: 100%;
+      padding: 12px;
+      font-size: 0.8rem;
+      border-radius: 12px;
+      background: var(--primary-color) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
+      text-shadow: none !important;
+    }
+
+    .map-iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      opacity: 0.95;
+      filter: grayscale(100%) invert(8%) contrast(90%);
+      -webkit-filter: grayscale(100%) invert(8%) contrast(90%);
+    }
+
+    /* --- ФУТЕР --- */
+    footer {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 40px 20px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .footer-logo-img {
+      max-width: 130px;
+      height: auto;
+    }
+
+    .footer-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-menu-list a {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+
+    .footer-menu-list a:hover {
+      opacity: 1;
+    }
+
+    .footer-contacts-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+
+    .footer-email {
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+
+    .footer-copyright {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 15px;
+    }
+
+    /* --- ПОП-АП (МОДАЛЬНАЯ ФОРМА ЗАПИСИ) --- */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(44, 60, 68, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background-color: var(--primary-color);
+      color: var(--white);
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 25px;
+      position: relative;
+      border-radius: 20px;
+      transform: translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal.open .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal h3 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .modal p {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 25px;
+    }
+
+    /* --- КНОПКА ОБРАТНОЙ СВЯЗИ --- */
+    .floating-callback-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background-color: rgba(35, 64, 60, 0.85);
+      border: none;
+      color: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 998;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      transition: var(--transition-smooth);
+    }
+
+    .floating-callback-btn:active {
+      transform: scale(0.9);
+    }
+
+    .ripple-wave {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1.5px solid rgba(44, 60, 68, 0.4);
+      box-sizing: border-box;
+      opacity: 0;
+      pointer-events: none;
+      animation: rippleAnimation 3s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    .ripple-wave:nth-child(2) {
+      animation-delay: 1.5s;
+    }
+
+    @keyframes rippleAnimation {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    .callback-btn-text {
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.2;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* --- АКЦИОННЫЙ БАННЕР ВНИЗУ ПРАЙСА --- */
+    .promo-banner {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 30px 25px;
+      margin-top: 35px;
+      /* Зазор между ценами и плашкой */
+    }
+
+    .promo-banner-title {
+      font-size: 1.5rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .promo-banner-text {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .btn-promo-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+      padding: 15px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 15px;
+      transition: var(--transition-smooth);
+      width: 100%;
+      text-decoration: none;
+    }
+
+    .btn-promo-banner:active {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ФИКСИРОВАННЫЙ HEADER -->
+  <header>
+    <div class="header-logo">
+      <img src="light.png" alt="АнНи" class="header-logo-img">
+    </div>
+    <div class="header-contacts">
+      <a href="tel:+79312440340">+7 (931) 244-03-40</a>
+      <a href="tel:+78123687547">+7 (812) 368-75-47</a>
+    </div>
+    <button class="burger-menu" id="burgerBtn" aria-label="Открыть меню">
+      <span class="burger-text">Меню</span>
+      <span class="burger-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+  </header>
+
+  <!-- МОБИЛЬНОЕ МЕНЮ -->
+  <div class="nav-overlay" id="navOverlay">
+    <button class="nav-back-btn" id="navBackBtn">✕ Назад</button>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="index.html" class="nav-link">Главная</a></li>
+      <li class="nav-item"><a href="prices.html" class="nav-link">Цены</a></li>
+      <li class="nav-item"><a href="services.html" class="nav-link">Услуги</a></li>
+      <li class="nav-item"><a href="about.html" class="nav-link">О нас</a></li>
+      <li class="nav-item"><a href="#contacts" class="nav-link">Контакты</a></li>
+    </ul>
+  </div>
+
+  <!-- СЕКЦИЯ С ЦЕНАМИ (АККОРДЕОН С ДОБАВЛЕННЫМИ ID) -->
+  <section class="prices-page">
+    <div class="breadcrumbs">
+      <a href="index.html">Главная</a> &gt; Цены
+    </div>
+    <h1 class="page-title">Цены</h1>
+
+    <div class="accordion-container">
+
+      <!-- 1. Парикмахерский зал -->
+      <div class="acc-item" id="hair">
+        <div class="acc-header">
+          <span>Парикмахерский зал</span>
+          <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-content">
+
+          <div class="table-section-title">Парикмахерские услуги леди</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                  <th>4 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Стрижка волос</td>
+                  <td class="service-price-cell">1 600 ₽</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Стрижка горячими ножницами</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">2 100 ₽</td>
+                  <td class="service-price-cell">2 400 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Укладка волос феном</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                  <td class="service-price-cell">1 400 ₽</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Укладка волос утюжком, плойкой</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                  <td class="service-price-cell">1 600 ₽</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Укладка волос с элементами прически</td>
+                  <td class="service-price-cell">1 400 ₽</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                  <td class="service-price-cell">1 900 ₽</td>
+                  <td class="service-price-cell">2 100 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Стрижка с укладкой</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                  <td class="service-price-cell">1 900 ₽</td>
+                  <td class="service-price-cell">2 100 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Прическа</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                  <td class="service-price-cell">2 100 ₽</td>
+                  <td class="service-price-cell">2 600 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Косоплетение</td>
+                  <td class="service-price-cell">700 ₽</td>
+                  <td class="service-price-cell">1 000 ₽</td>
+                  <td class="service-price-cell">1 200 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Коррекция челки</td>
+                  <td class="service-price-cell">700 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Мытье головы, сушка с направлением</td>
+                  <td class="service-price-cell">800 ₽</td>
+                  <td class="service-price-cell">1 000 ₽</td>
+                  <td class="service-price-cell">1 200 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">для леди и джентльменов (до 7 лет)</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Стрижка волос</td>
+                  <td class="service-price-cell">900 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Парикмахерские услуги джентльмены</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 50%;">Стрижка под одну насадку</td>
+                  <td class="service-price-cell">900 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Модельная, спортивная стрижка, две насадки</td>
+                  <td class="service-price-cell">1 100 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Модельная ножницами</td>
+                  <td class="service-price-cell">1 600 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Креативная стрижка</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Укладка волос феном</td>
+                  <td class="service-price-cell">800 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Оформление усов, бороды</td>
+                  <td class="service-price-cell">500 ₽</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                  <td class="service-price-cell">1 900 ₽</td>
+                  <td class="service-price-cell">2 100 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Окрашивание, колорирование, мелирование (материал отдельно)</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                  <th>4 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Окрашивание корней волос (до 1 см) в один тон</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                  <td class="service-price-cell">1 900 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Окрашивание волос в один тон</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                  <td class="service-price-cell">2 700 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Тонирование волос</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                  <td class="service-price-cell">2 700 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Мелирование волос (одна прядь)</td>
+                  <td class="service-price-cell">600 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Мелирование</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Декапирование волос</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                  <td class="service-price-cell">2 700 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Повторное декапирование волос</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                  <td class="service-price-cell">1 900 ₽</td>
+                  <td class="service-price-cell">2 400 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Цветовой дизайн</td>
+                  <td class="service-price-cell">5 000 ₽</td>
+                  <td class="service-price-cell">7 000 ₽</td>
+                  <td class="service-price-cell">9 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Уход Z.One</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">В комплексе стрижка/окрашивание</td>
+                  <td class="service-price-cell">1 000 ₽</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Уход за волосами</td>
+                  <td class="service-price-cell">700 ₽</td>
+                  <td class="service-price-cell">800 ₽</td>
+                  <td class="service-price-cell">900 ₽</td>
+                  <td class="service-price-cell">1 100 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Химическая завивка. Карвинг (материал включен)</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                  <th>4 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Химическая завивка "Niagara" / "Epica"</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">4 000 ₽</td>
+                  <td class="service-price-cell">5 000 ₽</td>
+                  <td class="service-price-cell">7 000 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="table-footnote">*дополнительно оплачиваются расходные материалы 500р.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. Ногтевой сервис -->
+      <div class="acc-item" id="nails">
+        <div class="acc-header">
+          <span>Ногтевой сервис</span>
+          <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-content">
+
+          <div class="table-section-title">Услуги ногтевого сервиса леди</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Маникюр классический комбинированный аппаратный</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Покрытие ногтей лак (в один тон)</td>
+                  <td class="service-price-cell">400 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Покрытие ногтей лак (френч)</td>
+                  <td class="service-price-cell">500 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Бесцветное покрытие, укрепление ногтей</td>
+                  <td class="service-price-cell">200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Маникюр+снятие +покрытие ногтей гель-лак (в один тон)</td>
+                  <td class="service-price-cell">2 600 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Маникюр+снятие +покрытие ногтей гель-лак (френч)</td>
+                  <td class="service-price-cell">3 100 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Покрытие гель-лак один тон</td>
+                  <td class="service-price-cell">1 200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Покрытие гель-лак френч</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Снятие покрытия гель-лак / при повторном покрытии</td>
+                  <td class="service-price-cell">500 ₽ / 200 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Услуги ногтевого сервиса джентльмены</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Комбинированный маникюр</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Детский маникюр</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Европейский маникюр</td>
+                  <td class="service-price-cell">600 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Дизайн ногтей</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name">Рисунок 1 ногтя</td>
+                  <td class="service-price-cell">50 ₽ / 100 ₽ / 150 ₽ / 200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Стразы</td>
+                  <td class="service-price-cell">20 ₽ / 25 ₽ / 30 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Слайд дизайн</td>
+                  <td class="service-price-cell">50 ₽ / 75 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Сложный дизайн 1 ногтя (градиент, втирка)</td>
+                  <td class="service-price-cell">100 ₽ / 200 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Наращивание ногтей</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Наращивание гель</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">4 000 ₽</td>
+                  <td class="service-price-cell">4 500 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Коррекция</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">4 000 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Ремонт ногтя</td>
+                  <td class="service-price-cell">300 ₽</td>
+                  <td class="service-price-cell">400 ₽</td>
+                  <td class="service-price-cell">500 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Снятие ногтей</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Дополнительные услуги</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Подпиливание ногтей</td>
+                  <td class="service-price-cell">200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Ремонт ногтя</td>
+                  <td class="service-price-cell">200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Укрепление ногтя</td>
+                  <td class="service-price-cell">100 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Педикюр</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                  <th>4 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Классический, аппаратный, комбинированный</td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Педикюр (гиперкератоз, трещины, мозоли, натоптыши, онихомикоз)</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">4 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Обработка пальцев стопы</td>
+                  <td class="service-price-cell">1 400 ₽</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Обработка стопы</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Обработка вросшего ногтя *с тампонадой</td>
+                  <td class="service-price-cell">500 ₽</td>
+                  <td class="service-price-cell">600 ₽</td>
+                  <td class="service-price-cell">700 ₽</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Удаление стержневой мозоли/натоптыша</td>
+                  <td class="service-price-cell">600 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Обработка онихолизиса</td>
+                  <td class="service-price-cell">1 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Покрытие ногтей лак (в один тон)</td>
+                  <td class="service-price-cell">400 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Покрытие ногтей гель-лак (в один тон)</td>
+                  <td class="service-price-cell">1 200 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Покрытие ногтей гель-лак (френч)</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Снятие покрытия гель-лак / При повторном покрытии</td>
+                  <td class="service-price-cell">500 ₽ / 200 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3. Косметология лица -->
+      <div class="acc-item" id="face">
+        <div class="acc-header">
+          <span>Косметология лица</span>
+          <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-content">
+
+          <div class="table-section-title">Процедуры по уходу за кожей лица, шеи, декольте</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Механическая чистка по методу холодного гидрирования (лицо)</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Механическая чистка по методу холодного гидрирования (спина, декольте)</td>
+                  <td class="service-price-cell">4 000 ₽</td>
+                  <td class="service-price-cell">4 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Комбинированная чистка лица</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Ультразвуковая чистка</td>
+                  <td class="service-price-cell">2 800 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Удаление милиумов <span class="service-desc">Менее 10шт. (1 шт) / Более 10шт.
+                      (1шт.)</span></td>
+                  <td class="service-price-cell">300 ₽ / 150 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Альфа-комплекс <span class="service-desc">*в комплексе с другими
+                      процедурами</span></td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                  <td class="service-price-cell">1 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Комплекс ABR</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">BioPhytoPeeling</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Желтый пилинг</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">4 500 ₽</td>
+                  <td class="service-price-cell">6 500 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">BioRepeel, PRC, Peach-peel <span class="service-desc">Пилинг Evasion</span>
+                  </td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">4 000 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Пилинг салициловый, миндальный, гликолевый, молочный</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Массаж лица</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Уход за лицом</td>
+                  <td class="service-price-cell">2 800 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Маска кремовая/Маска альгинатная</td>
+                  <td class="service-price-cell">400 ₽</td>
+                  <td class="service-price-cell">500 ₽ / 800 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Карбокситерапия</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Аппаратная косметология лица</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Микротоковый massage лица</td>
+                  <td class="service-price-cell">1 900 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">RF-лифтинг кожи (лицо)</td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">RF-лифтинг кожи (лицо, шея)</td>
+                  <td class="service-price-cell">2 400 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">RF-лифтинг кожи (лицо, шея, декольте)</td>
+                  <td class="service-price-cell">2 600 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Безинъекционная биоревитализация (методом электропорации)</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Уход за бровями и ресницами</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Коррекция бровей</td>
+                  <td class="service-price-cell">700 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Окрашивание бровей</td>
+                  <td class="service-price-cell">600 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Окрашивание ресниц</td>
+                  <td class="service-price-cell">600 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Коррекция + окрашивание бровей</td>
+                  <td class="service-price-cell">1 200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Комплекс коррекция + окрашивание бровей и ресниц</td>
+                  <td class="service-price-cell">1 600 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Прокол ушей</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Прокол ушей (одно ухо)</td>
+                  <td class="service-price-cell">1 700 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">С установкой стерильных сережек</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Стерильные сережки</td>
+                  <td class="service-price-cell">350 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 4. Косметология тела -->
+      <div class="acc-item" id="body">
+        <div class="acc-header">
+          <span>Косметология тела</span>
+          <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-content">
+
+          <div class="table-section-title">Массаж тела</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Услуга</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Массаж спины <span class="service-desc">30 мин.</span></td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Общий массаж тела <span class="service-desc">60 мин.</span></td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">2 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Общий массаж тела <span class="service-desc">90 мин.</span></td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Антицеллюлитный массаж <span class="service-desc">60 мин.</span></td>
+                  <td class="service-price-cell">2 300 ₽</td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Антицеллюлитный массаж <span class="service-desc">90 мин.</span></td>
+                  <td class="service-price-cell">3 000 ₽</td>
+                  <td class="service-price-cell">3 500 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Лимфодренажный массаж <span class="service-desc">60 мин.</span></td>
+                  <td class="service-price-cell">2 300 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">LPG-массаж <span class="service-desc">Костюм: 1000 ₽</span></td>
+                  <td class="service-price-cell">1 600 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Абонемент 10 сеансов</td>
+                  <td class="service-price-cell">1 400 ₽</td>
+                  <td class="service-price-cell">1 290 ₽</td>
+                  <td class="service-price-cell">9 900 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Депиляция воском</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th style="width: 40%;">Область</th>
+                  <th>1 категория</th>
+                  <th>2 категория</th>
+                  <th>3 категория</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="service-name">Область над верхней губой, подбородка</td>
+                  <td class="service-price-cell">400 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Лицо полностью</td>
+                  <td class="service-price-cell">1 200 ₽</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Область шеи</td>
+                  <td class="service-price-cell">400 ₽</td>
+                  <td class="service-price-cell">500 ₽</td>
+                  <td class="service-price-cell">600 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Подмышки</td>
+                  <td class="service-price-cell">500 ₽</td>
+                  <td class="service-price-cell">600 ₽</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Руки</td>
+                  <td class="service-price-cell">500 ₽</td>
+                  <td class="service-price-cell">600 ₽</td>
+                  <td class="service-price-cell">800 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Ноги до колена</td>
+                  <td class="service-price-cell">700 ₽</td>
+                  <td class="service-price-cell">900 ₽</td>
+                  <td class="service-price-cell">1 200 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Ноги полностью/спина</td>
+                  <td class="service-price-cell">1 300 ₽</td>
+                  <td class="service-price-cell">1 500 ₽</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Область бикини классика</td>
+                  <td class="service-price-cell">1 000 ₽</td>
+                  <td class="service-price-cell">-</td>
+                  <td class="service-price-cell">-</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Область бикини глубокое</td>
+                  <td class="service-price-cell">1 800 ₽</td>
+                  <td class="service-price-cell">2 000 ₽</td>
+                  <td class="service-price-cell">2 200 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 5. Турбосолярий -->
+      <div class="acc-item" id="solarium">
+        <div class="acc-header">
+          <span>Турбосолярий</span>
+          <span class="acc-icon">+</span>
+        </div>
+        <div class="acc-content">
+
+          <div class="table-section-title">Турбосолярий</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">1 минута</td>
+                  <td class="service-price-cell">30 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Абонементы (срок действия 3 месяца) <span class="service-desc">60 мин.</span>
+                  </td>
+                  <td class="service-price-cell">1 680 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-section-title">Аксессуары для загара в солярии</div>
+          <div class="table-responsive">
+            <table class="price-table">
+              <tbody>
+                <tr>
+                  <td class="service-name" style="width: 70%;">Стикини</td>
+                  <td class="service-price-cell">15 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Шапочка</td>
+                  <td class="service-price-cell">10 ₽</td>
+                </tr>
+                <tr>
+                  <td class="service-name">Крем для загара</td>
+                  <td class="service-price-cell">150 ₽</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Акции (Баннер внизу списка цен) -->
+    <div class="promo-banner">
+      <h2 class="promo-banner-title">Акции</h2>
+      <p class="promo-banner-text">Познакомьтесь с услугами студии по выгодной цене — подготовили особые предложения для
+        гостей</p>
+      <a href="index.html#promoSlider" class="btn-promo-banner">
+        <span>Узнать об акциях</span>
+        <span>→</span>
+      </a>
+    </div>
+
+  </section>
+
+  <!-- ФОРМА КОНСУЛЬТАЦИИ -->
+  <section class="consultation">
+    <h3>Нужна консультация?</h3>
+    <p>Оставьте заявку, и наш администратор ответит на любые вопросы или поможет подобрать услугу</p>
+
+    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Заявка успешно отправлена!');">
+      <div class="form-group">
+        <input type="text" class="form-input" placeholder="Ваше имя" required>
+      </div>
+      <div class="form-group">
+        <input type="tel" class="form-input" placeholder="Номер телефона" required>
+      </div>
+      <div class="form-group">
+        <select class="form-select">
+          <option value="" disabled selected>Какая услуга интересует</option>
+          <option value="hair">Парикмахерский зал</option>
+          <option value="nails">Ногтевой сервис</option>
+          <option value="body">Косметология тела</option>
+          <option value="face">Косметология лица</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Оставить заявку</button>
+    </form>
+  </section>
+
+  <!-- КОНТАКТЫ (ОБНОВЛЕНО) -->
+  <section class="contacts" id="contacts">
+    <div class="contacts-row">
+      <div class="contacts-text-side">
+        <h3 class="contacts-sub-title-main">Контакты</h3>
+
+        <div class="info-item">
+          <div class="info-label">Студия красоты и косметологии "Анни"</div>
+          <div class="info-value">г. Санкт-Петербург, ул. Маршала Захарова, 62/1</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Время работы:</div>
+          <div class="info-value">Ежедневно с 10:00 до 21:00</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Телефон:</div>
+          <div class="contacts-phones">
+            <a href="tel:+79312440340" class="info-value">+7 (931) 244-03-40</a>
+            <a href="tel:+78123687547" class="info-value">+7 (812) 368-75-47</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-container" id="mapContainer">
+      <iframe class="map-iframe"
+        src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm"
+        width="100%" height="350" frameborder="0"></iframe>
+
+      <div class="map-overlay-card">
+        <h4>Будем рады<br>видеть вас в нашей студии!</h4>
+        <p>Ваше место заботы о себе. Выберите удобное время для визита</p>
+        <button class="btn-cta open-booking-btn btn-gold-gradient">Записаться</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФУТЕР -->
+  <footer>
+    <div class="footer-layout">
+      <div class="footer-logo-col">
+        <img src="light.png" alt="АнНи" class="footer-logo-img">
+      </div>
+      <div class="footer-menu-col">
+        <ul class="footer-menu-list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="gallery.html">Галерея работ</a></li>
+          <li><a href="prices.html">Цены</a></li>
+        </ul>
+      </div>
+      <div class="footer-contacts-col">
+        <span class="footer-address-text"
+          style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 5px; display: block;">ул. Маршала Захарова,
+          62/1</span>
+        <a href="tel:+79312440340">+7 (931) 244-03-40</a>
+        <a href="tel:+78123687547">+7 (812) 368-75-47</a>
+        <a href="mailto:anni-studio@mail.ru" class="footer-email">anni-studio@mail.ru</a>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Студия красоты и косметологии «АнНи»</p>
+  </footer>
+
+  <!-- ПОП-АП (МОДАЛЬНАЯ ФОРМА ЗАПИСИ) -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h3>Записаться на сеанс</h3>
+      <p>Оставьте ваши контакты, и мы перезвоним для подтверждения записи</p>
+
+      <form action="#" method="POST"
+        onsubmit="event.preventDefault(); alert('Вы успешно записаны!'); document.getElementById('bookingModal').classList.remove('open');">
+        <div class="form-group">
+          <input type="text" class="form-input" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" class="form-input" placeholder="Номер телефона" required>
+        </div>
+        <div class="form-group">
+          <select class="form-select">
+            <option value="" disabled selected>Какая услуга интересует</option>
+            <option value="hair">Парикмахерский зал</option>
+            <option value="nails">Ногтевой сервис</option>
+            <option value="body">Косметология тела</option>
+            <option value="face">Косметология лица</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">Отправить запрос</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- КНОПКА ОБРАТНОЙ СВЯЗИ С РАСХОДЯЩИМИСЯ КРУГАМИ -->
+  <!-- КНОПКА ОБРАТНОЙ СВЯЗИ С РАСХОДЯЩИМИСЯ КРУГАМИ (ОДИН ИСТОЧНИК И БЕЗОТКАЗНЫЙ ONCLICK) -->
+  <button class="floating-callback-btn" id="floatingCallbackBtn" aria-label="Онлайн-запись" onclick="openBookingModal()">
+    <div class="ripple-wave"></div>
+    <div class="ripple-wave"></div>
+    <span class="callback-btn-text">онлайн-<br>запись</span>
+  </button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // 1. БУРГЕР МЕНЮ И НАВИГАЦИЯ
+      const burgerBtn = document.getElementById('burgerBtn');
+      const navOverlay = document.getElementById('navOverlay');
+      const navBackBtn = document.getElementById('navBackBtn');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      function toggleMenu() {
+        burgerBtn.classList.toggle('active');
+        navOverlay.classList.toggle('open');
+        document.body.style.overflow = navOverlay.classList.contains('open') ? 'hidden' : '';
+      }
+
+      burgerBtn.addEventListener('click', toggleMenu);
+      navBackBtn.addEventListener('click', toggleMenu);
+
+      navOverlay.addEventListener('click', (e) => {
+        if (e.target === navOverlay) {
+          toggleMenu();
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          toggleMenu();
+        });
+      });
+
+      // 2. ИНТЕРАКТИВНЫЙ АККОРДЕОН ДЛЯ ЦЕН
+      const accHeaders = document.querySelectorAll('.acc-header');
+
+      accHeaders.forEach(header => {
+        header.addEventListener('click', function () {
+          const item = this.parentElement;
+          const content = this.nextElementSibling;
+
+          item.classList.toggle('active');
+          if (item.classList.contains('active')) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+          } else {
+            content.style.maxHeight = '0';
+          }
+        });
+      });
+
+      // 3. ПОП-АП (МОДАЛЬНОЕ ОКНО) ПО КНОПКЕ "ЗАПИСАТЬСЯ"
+      const bookingModal = document.getElementById('bookingModal');
+      const modalClose = document.getElementById('modalClose');
+
+      window.openBookingModal = function () {
+        if (bookingModal) {
+          bookingModal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      };
+
+      function closeModal() {
+        if (bookingModal) {
+          bookingModal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+      }
+
+      if (bookingModal) {
+        bookingModal.addEventListener('click', (e) => {
+          if (e.target === bookingModal) {
+            closeModal();
+          }
+        });
+      }
+
+      const openModalBtns = document.querySelectorAll('.open-booking-btn');
+      openModalBtns.forEach(btn => {
+        btn.addEventListener('click', openBookingModal);
+      });
+
+      // 4. ЛЕНИВАЯ ЗАГРУЗКА ЯНДЕКС КАРТЫ
+      const mapContainer = document.getElementById('mapContainer');
+      const mapIframe = mapContainer.querySelector('.map-iframe');
+
+      mapContainer.addEventListener('click', function loadMap() {
+        if (!mapContainer.classList.contains('loaded')) {
+          const src = mapIframe.getAttribute('data-src');
+          mapIframe.setAttribute('src', src);
+          mapContainer.classList.add('loaded');
+        }
+      });
+
+      // 5. ОТКРЫТИЕ РАЗДЕЛА ИЗ ХЭША URL (НАПРИМЕР, prices.html#hair)
+      function openAccordionByHash() {
+        const hash = window.location.hash;
+        if (hash) {
+          const targetItem = document.querySelector(hash);
+          if (targetItem && targetItem.classList.contains('acc-item')) {
+            const header = targetItem.querySelector('.acc-header');
+            const content = targetItem.querySelector('.acc-content');
+            
+            if (header && content) {
+              targetItem.classList.add('active');
+              content.style.maxHeight = content.scrollHeight + 'px';
+              
+              setTimeout(() => {
+                const elementPosition = targetItem.getBoundingClientRect().top + window.scrollY;
+                const offsetPosition = elementPosition - 90; // Компенсация фиксированной шапки сайта
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }, 300);
+            }
+          }
+        }
+      }
+
+      openAccordionByHash();
+      window.addEventListener('hashchange', openAccordionByHash);
+    });
+  </script>
+</body>
+</html>

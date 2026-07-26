@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Услуги — Студия красоты и косметологии АнНи</title>
+  <style>
+    /* --- CSS ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ --- */
+    :root {
+      --primary-color: #23403C;
+      --primary-rgb: 35, 64, 60;
+      --text-color: #333333;
+      --light-bg: #F4F6F7;
+      --white: #FFFFFF;
+      --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      --font-stack: -apple-system, BlinkMacSystemFont, "SF Compact Text", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      letter-spacing: 0px !important;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: var(--font-stack);
+      color: var(--text-color);
+      background-color: var(--white);
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
+    }
+
+    /* --- ФИКСИРОВАННЫЙ HEADER --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background-color: rgba(35, 64, 60, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .header-logo-img {
+      max-width: 105px;
+      height: auto;
+      display: block;
+    }
+
+    .header-contacts {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-left: auto;
+    }
+
+    .header-contacts a {
+      margin-bottom: 2px;
+      opacity: 0.9;
+    }
+
+    .burger-menu {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+      width: auto;
+      height: auto;
+      z-index: 1001;
+      margin-left: 35px;
+    }
+
+    .burger-text {
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      transition: var(--transition-smooth);
+    }
+
+    .burger-lines {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 16px;
+    }
+
+    .burger-lines span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--white);
+      transition: var(--transition-smooth);
+    }
+
+    .burger-menu.active .burger-lines span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .burger-menu.active .burger-lines span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger-menu.active .burger-lines span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .burger-menu.active .burger-text {
+      opacity: 0.6;
+    }
+
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--primary-color);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center !important;
+      align-items: center;
+      transform: translateY(-100%);
+      transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .nav-overlay.open {
+      transform: translateY(0);
+    }
+
+    .nav-back-btn {
+      position: absolute;
+      top: 22px;
+      left: 20px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0.8;
+    }
+
+    .nav-list {
+      list-style: none;
+      text-align: center;
+    }
+
+    .nav-item {
+      margin: 25px 0;
+    }
+
+    .nav-link {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--white);
+      transition: opacity 0.3s;
+    }
+
+    .nav-link:active {
+      opacity: 0.6;
+    }
+
+    /* --- СЕКЦИЯ УСЛУГ --- */
+    .services-page {
+      margin-top: 70px;
+      padding: 40px 20px 60px;
+      background-color: var(--white);
+    }
+
+    .breadcrumbs {
+      font-size: 0.8rem;
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    .breadcrumbs a {
+      color: #999;
+      transition: color 0.3s;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary-color);
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      margin-bottom: 35px;
+      text-align: left;
+    }
+
+    .services-list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .service-block {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--white);
+      border: 1.5px solid rgba(35, 64, 60, 0.25);
+      border-radius: 24px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    }
+
+    .service-block-photo {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .service-block-title {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .service-block-desc-item {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 4px;
+      padding: 0 4px;
+    }
+
+    /* --- КНОПКИ НА БЕЛОМ ФОНЕ (СТАНОВЯТСЯ ЗЕЛЕНЫМИ С БЕЛЫМ ТЕКСТОМ) --- */
+    .btn-services-prices.btn-gold-gradient,
+    .btn-services-prices,
+    .map-overlay-card .btn-gold-gradient {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      background: var(--primary-color) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
+      text-shadow: none !important;
+      padding: 15px 20px !important;
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      border-radius: 15px !important;
+      margin-top: 15px !important;
+      transition: var(--transition-smooth) !important;
+      width: 100% !important;
+    }
+
+    .btn-services-prices:active,
+    .map-overlay-card .btn-gold-gradient:active {
+      opacity: 0.9 !important;
+    }
+
+    /* --- КНОПКА В ПЛАШКЕ АКЦИИ (СОХРАНЯЕТСЯ ЗОЛОТОЙ ГРАДИЕНТ) --- */
+    .btn-promo-banner.btn-gold-gradient,
+    .btn-promo-banner {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+      padding: 15px 20px !important;
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      border-radius: 15px !important;
+      margin-top: 15px !important;
+      transition: var(--transition-smooth) !important;
+      width: 100% !important;
+    }
+
+    .btn-promo-banner:active {
+      opacity: 0.85 !important;
+    }
+
+    /* --- КНОПКА НА ЗЕЛЕНОМ ФОНЕ ФОРМЫ (СТАНОВИТСЯ БЕЛОЙ С ЗЕЛЕНЫМ ТЕКСТОМ) --- */
+    .btn-submit {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      background: var(--white) !important;
+      color: var(--primary-color) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+      text-shadow: none !important;
+      padding: 16px !important;
+      font-size: 0.95rem !important;
+      text-transform: uppercase !important;
+      font-weight: 600 !important;
+      border-radius: 15px !important;
+      margin-top: 10px !important;
+      cursor: pointer !important;
+      transition: var(--transition-smooth) !important;
+      width: 100% !important;
+    }
+
+    .btn-submit:active {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .service-block-btn-row {
+      display: flex !important;
+      gap: 10px !important;
+      width: 100% !important;
+      margin-top: 15px !important;
+      align-items: center !important;
+    }
+
+    .service-block-btn-row .btn-services-prices,
+    .service-block-btn-row .btn-services-signup {
+      margin: 0 !important;
+      border-radius: 15px !important;
+      height: 44px !important;
+      font-size: 0.75rem !important;
+      white-space: nowrap !important;
+      width: calc(50% - 5px) !important;
+    }
+
+    .service-block-btn-row .btn-services-prices {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 12px 14px !important;
+    }
+
+    .service-block-btn-row .btn-services-signup {
+      font-weight: 700 !important;
+    }
+
+    .btn-services-signup {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      background-color: var(--white) !important;
+      color: var(--primary-color) !important;
+      border: 1.5px solid var(--primary-color) !important;
+      transition: var(--transition-smooth) !important;
+    }
+
+    .btn-services-signup:active {
+      background-color: rgba(35, 64, 60, 0.05) !important;
+    }
+
+    .btn-gold-gradient {
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.35);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+      border-radius: 15px !important;
+    }
+
+    @keyframes goldGlowPulse {
+      0% {
+        box-shadow: 0 0 5px rgba(216, 190, 138, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 22px rgba(216, 190, 138, 0.85);
+        transform: scale(1.02);
+      }
+
+      100% {
+        box-shadow: 0 0 5px rgba(216, 190, 138, 0.4);
+      }
+    }
+
+    .btn-gold-glow {
+      animation: goldGlowPulse 2s infinite ease-in-out;
+    }
+
+    .promo-banner {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 30px 25px;
+      margin-top: 20px;
+    }
+
+    .promo-banner-title {
+      font-size: 1.5rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .promo-banner-text {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .btn-promo-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+      padding: 15px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 15px;
+      transition: var(--transition-smooth);
+      width: 100%;
+    }
+
+    .btn-promo-banner:active {
+      opacity: 0.85;
+    }
+
+    /* --- ФОРМА КОНСУЛЬТАЦИИ --- */
+    .consultation {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 60px 20px;
+    }
+
+    .consultation h3 {
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .consultation p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      color: var(--white);
+      padding: 12px 0;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 0;
+      font-size: 0.95rem;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-select option {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    /* --- КОНТАКТЫ (ОБНОВЛЕНО) --- */
+    /* --- КОНТАКТЫ (ОБНОВЛЕНО: ВЫРАВНИВАНИЕ ПО ЛЕВОМУ КРАЮ) --- */
+    .contacts {
+      padding: 60px 20px 0px;
+      background-color: var(--white);
+    }
+
+    .contacts-row {
+      display: flex;
+      justify-content: flex-start;
+      /* Выравнивание контейнера по левому краю */
+      align-items: stretch;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .contacts-text-side {
+      flex: 0 0 100%;
+      text-align: left;
+      /* Текст прижат к левому краю */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      /* Элементы внутри колонки прижаты влево */
+    }
+
+    .contacts-sub-title-main {
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      text-align: left;
+      /* Заголовок прижат влево */
+    }
+
+    .info-item {
+      margin-bottom: 18px;
+      text-align: left;
+      /* Текст пунктов прижат влево */
+    }
+
+    .info-label {
+      font-size: 0.72rem;
+      color: #777;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      text-align: left;
+      /* Подписи прижаты влево */
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      font-weight: 500;
+      line-height: 1.4;
+      text-align: left;
+      /* Значения прижаты влево */
+    }
+
+    .contacts-phones {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 5px;
+      align-items: flex-start;
+      /* Номера телефонов выровнены по левому краю */
+    }
+
+    .map-container {
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      margin-right: -20px;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0px;
+      box-shadow: none;
+    }
+
+    .map-overlay-card {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      transform: none;
+      width: calc(100% - 40px);
+      max-width: 280px;
+      background-color: var(--white);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      z-index: 5;
+      text-align: center;
+    }
+
+    .map-overlay-card h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+
+    .map-overlay-card p {
+      font-size: 0.72rem;
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.35;
+    }
+
+    /* Кнопка на островке карты (зеленая) */
+    .map-overlay-card .btn-gold-gradient {
+      width: 100%;
+      padding: 12px;
+      font-size: 0.8rem;
+      border-radius: 12px;
+      background: var(--primary-color) !important;
+      color: var(--white) !important;
+      border: none !important;
+      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
+      text-shadow: none !important;
+    }
+
+    .map-iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      opacity: 0.95;
+      filter: grayscale(100%) invert(8%) contrast(90%);
+      -webkit-filter: grayscale(100%) invert(8%) contrast(90%);
+    }
+
+    /* --- ФУТЕР --- */
+    footer {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 40px 20px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .footer-logo-img {
+      max-width: 130px;
+      height: auto;
+    }
+
+    .footer-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-menu-list a {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+
+    .footer-menu-list a:hover {
+      opacity: 1;
+    }
+
+    .footer-contacts-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+
+    .footer-email {
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+
+    .footer-copyright {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 15px;
+    }
+
+    /* --- ПОП-АП (МОДАЛЬНАЯ ФОРМА ЗАПИСИ) --- */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(44, 60, 68, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background-color: var(--primary-color);
+      color: var(--white);
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 25px;
+      position: relative;
+      border-radius: 20px;
+      transform: translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .modal.open .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal h3 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .modal p {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 25px;
+    }
+
+    /* --- КНОПКА ОБРАТНОЙ СВЯЗИ --- */
+    .floating-callback-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background-color: rgba(35, 64, 60, 0.85);
+      border: none;
+      color: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 998;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      transition: var(--transition-smooth);
+    }
+
+    .floating-callback-btn:active {
+      transform: scale(0.9);
+    }
+
+    .ripple-wave {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1.5px solid rgba(35, 64, 60, 0.4);
+      box-sizing: border-box;
+      opacity: 0;
+      pointer-events: none;
+      animation: rippleAnimation 3s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    .ripple-wave:nth-child(2) {
+      animation-delay: 1.5s;
+    }
+
+    @keyframes rippleAnimation {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    .callback-btn-text {
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.2;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ФИКСИРОВАННЫЙ HEADER -->
+  <header>
+    <div class="header-logo">
+      <img src="light.png" alt="АнНи" class="header-logo-img">
+    </div>
+    <div class="header-contacts">
+      <a href="tel:+79312440340">+7 (931) 244-03-40</a>
+      <a href="tel:+78123687547">+7 (812) 368-75-47</a>
+    </div>
+    <button class="burger-menu" id="burgerBtn" aria-label="Открыть меню">
+      <span class="burger-text">Меню</span>
+      <span class="burger-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+  </header>
+
+  <!-- МОБИЛЬНОЕ МЕНЮ -->
+  <div class="nav-overlay" id="navOverlay">
+    <button class="nav-back-btn" id="navBackBtn">✕ Назад</button>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="index.html" class="nav-link">Главная</a></li>
+      <li class="nav-item"><a href="prices.html" class="nav-link">Цены</a></li>
+      <li class="nav-item"><a href="services.html" class="nav-link">Услуги</a></li>
+      <li class="nav-item"><a href="about.html" class="nav-link">О нас</a></li>
+      <li class="nav-item"><a href="#contacts" class="nav-link">Контакты</a></li>
+    </ul>
+  </div>
+
+  <!-- СЕКЦИЯ КОНТЕНТА УСЛУГ -->
+  <section class="services-page">
+    <div class="breadcrumbs">
+      <a href="index.html">Главная</a> &gt; Услуги
+    </div>
+    <h1 class="page-title">Услуги</h1>
+
+    <div class="services-list-container">
+
+      <!-- Услуга 1 (Парикмахерский зал) -->
+      <div class="service-block">
+        <img src="photo_2_2026-07-25_09-39-09.jpg" class="service-block-photo" alt="Парикмахерский зал">
+        <h2 class="service-block-title">Парикмахерский зал</h2>
+        <p class="service-block-desc-item">-Стрижки и окрашивания</p>
+        <p class="service-block-desc-item">-Химическая завивка</p>
+        <p class="service-block-desc-item">-Уход для волос</p>
+        <p class="service-block-desc-item">-Укладки</p>
+
+        <div class="service-block-btn-row">
+          <a href="prices.html#hair" class="btn-services-prices btn-gold-gradient">
+            <span>Смотреть цены</span>
+            <span>→</span>
+          </a>
+          <button class="btn-services-signup open-booking-btn">ЗАПИСАТЬСЯ</button>
+        </div>
+      </div>
+
+      <!-- Услуга 2 (Ногтевой сервис) -->
+      <div class="service-block">
+        <img src="photo_1_2026-07-25_09-39-09.jpg" class="service-block-photo" alt="Ногтевой сервис">
+        <h2 class="service-block-title">Ногтевой сервис</h2>
+        <p class="service-block-desc-item">-Маникюр</p>
+        <p class="service-block-desc-item">-Педикюр</p>
+        <p class="service-block-desc-item">-Уход и укрепление ногтей</p>
+
+        <div class="service-block-btn-row">
+          <a href="prices.html#nails" class="btn-services-prices btn-gold-gradient">
+            <span>Смотреть цены</span>
+            <span>→</span>
+          </a>
+          <button class="btn-services-signup open-booking-btn">ЗАПИСАТЬСЯ</button>
+        </div>
+      </div>
+
+      <!-- Услуга 3 (Косметология лица) -->
+      <div class="service-block">
+        <img src="photo_3_2026-07-25_09-39-09.jpg" class="service-block-photo" alt="Косметология лица">
+        <h2 class="service-block-title">Косметология лица</h2>
+        <p class="service-block-desc-item">-Аппаратная косметология</p>
+        <p class="service-block-desc-item">-Процедуры по уходу за кожей</p>
+        <p class="service-block-desc-item">-Чистки и пилинги лица</p>
+        <p class="service-block-desc-item">-Лечение угревой болезни</p>
+
+        <div class="service-block-btn-row">
+          <a href="prices.html#face" class="btn-services-prices btn-gold-gradient">
+            <span>Смотреть цены</span>
+            <span>→</span>
+          </a>
+          <button class="btn-services-signup open-booking-btn">ЗАПИСАТЬСЯ</button>
+        </div>
+      </div>
+
+      <!-- Услуга 4 (Косметология тела) -->
+      <div class="service-block">
+        <img src="photo_5_2026-07-25_09-39-09.jpg" class="service-block-photo" alt="Косметология тела">
+        <h2 class="service-block-title">Косметология тела</h2>
+        <p class="service-block-desc-item">-Классический массаж</p>
+        <p class="service-block-desc-item">-LPG-массаж</p>
+        <p class="service-block-desc-item">-Депиляция воском</p>
+
+        <div class="service-block-btn-row">
+          <a href="prices.html#body" class="btn-services-prices btn-gold-gradient">
+            <span>Смотреть цены</span>
+            <span>→</span>
+          </a>
+          <button class="btn-services-signup open-booking-btn">ЗАПИСАТЬСЯ</button>
+        </div>
+      </div>
+
+      <!-- Услуга 5 (Солярий) -->
+      <div class="service-block">
+        <img src="photo_4_2026-07-25_09-39-09.jpg" class="service-block-photo" alt="Турбосолярий">
+        <h2 class="service-block-title">Солярий</h2>
+        <p class="service-block-desc-item">Вертикальный турбосолярий</p>
+        <p class="service-block-desc-item">Разовые посещения и абонементы</p>
+
+        <div class="service-block-btn-row">
+          <a href="prices.html#solarium" class="btn-services-prices btn-gold-gradient">
+            <span>Смотреть цены</span>
+            <span>→</span>
+          </a>
+          <button class="btn-services-signup open-booking-btn">ЗАПИСАТЬСЯ</button>
+        </div>
+      </div>
+
+      <!-- Услуга 6 (Подарочный сертификат) -->
+      <div class="service-block">
+        <img src="photo_2026-07-25_19-37-10.jpg" class="service-block-photo" alt="Подарочный сертификат">
+        <h2 class="service-block-title">Подарочный сертификат</h2>
+        <p class="service-block-desc-item">Дарите заботу и идеальный уход — выберите любой номинал или услугу для
+          близких</p>
+        <a href="#contacts" class="btn-services-prices btn-gold-gradient">
+          <span>Приобрести в салоне</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <div class="promo-banner">
+        <h2 class="promo-banner-title">Акции</h2>
+        <p class="promo-banner-text">Познакомьтесь с услугами студии по выгодной цене — подготовили особые предложения
+          для гостей</p>
+        <a href="index.html#promoSlider" class="btn-promo-banner btn-gold-gradient">
+          <span>Узнать об акциях</span>
+          <span>→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ФОРМА КОНСУЛЬТАЦИИ -->
+  <section class="consultation">
+    <h3>Нужна консультация?</h3>
+    <p>Оставьте заявку, и наш администратор ответит на любые вопросы или поможет подобрать услугу</p>
+
+    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Заявка успешно отправлена!');">
+      <div class="form-group">
+        <input type="text" class="form-input" placeholder="Ваше имя" required>
+      </div>
+      <div class="form-group">
+        <input type="tel" class="form-input" placeholder="Номер телефона" required>
+      </div>
+      <div class="form-group">
+        <select class="form-select">
+          <option value="" disabled selected>Какая услуга интересует</option>
+          <option value="hair">Парикмахерский зал</option>
+          <option value="nails">Ногтевой сервис</option>
+          <option value="body">Косметология тела</option>
+          <option value="face">Косметология лица</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit">Оставить заявку</button>
+    </form>
+  </section>
+
+  <!-- КОНТАКТЫ (ОБНОВЛЕНО) -->
+  <section class="contacts" id="contacts">
+    <div class="contacts-row">
+      <div class="contacts-text-side">
+        <h3 class="contacts-sub-title-main">Контакты</h3>
+
+        <div class="info-item">
+          <div class="info-label">Студия красоты и косметологии "Анни"</div>
+          <div class="info-value">г. Санкт-Петербург, ул. Маршала Захарова, 62/1</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Время работы:</div>
+          <div class="info-value">Ежедневно с 10:00 до 21:00</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Телефон:</div>
+          <div class="contacts-phones">
+            <a href="tel:+79312440340" class="info-value">+7 (931) 244-03-40</a>
+            <a href="tel:+78123687547" class="info-value">+7 (812) 368-75-47</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-container" id="mapContainer">
+      <iframe class="map-iframe"
+        src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm"
+        width="100%" height="350" frameborder="0"></iframe>
+
+      <div class="map-overlay-card">
+        <h4>Будем рады<br>видеть вас в нашей студии!</h4>
+        <p>Ваше место заботы о себе. Выберите удобное время для визита</p>
+        <button class="btn-cta open-booking-btn btn-gold-gradient">ЗАПИСАТЬСЯ</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФУТЕР -->
+  <footer>
+    <div class="footer-layout">
+      <div class="footer-logo-col">
+        <img src="light.png" alt="АнНи" class="footer-logo-img">
+      </div>
+      <div class="footer-menu-col">
+        <ul class="footer-menu-list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="gallery.html">Галерея работ</a></li>
+          <li><a href="prices.html">Цены</a></li>
+        </ul>
+      </div>
+      <div class="footer-contacts-col">
+        <span class="footer-address-text"
+          style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 5px; display: block;">ул. Маршала Захарова,
+          62/1</span>
+        <a href="tel:+79312440340">+7 (931) 244-03-40</a>
+        <a href="tel:+78123687547">+7 (812) 368-75-47</a>
+        <a href="mailto:anni-studio@mail.ru" class="footer-email">anni-studio@mail.ru</a>
+      </div>
+    </div>
+    <p class="footer-copyright">© 2026 Студия красоты и косметологии «АнНи»</p>
+  </footer>
+
+  <!-- ПОП-АП (МОДАЛЬНАЯ ФОРМА ЗАПИСИ) -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h3>ЗАПИСАТЬСЯ на сеанс</h3>
+      <p>Оставьте ваши контакты, и мы перезвоним для подтверждения записи</p>
+
+      <form action="#" method="POST"
+        onsubmit="event.preventDefault(); alert('Вы успешно записаны!'); document.getElementById('bookingModal').classList.remove('open');">
+        <div class="form-group">
+          <input type="text" class="form-input" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <input type="tel" class="form-input" placeholder="Номер телефона" required>
+        </div>
+        <div class="form-group">
+          <select class="form-select">
+            <option value="" disabled selected>Какая услуга интересует</option>
+            <option value="hair">Парикмахерский зал</option>
+            <option value="nails">Ногтевой сервис</option>
+            <option value="body">Косметология тела</option>
+            <option value="face">Косметология лица</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">Отправить запрос</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- КНОПКА ОБРАТНОЙ СВЯЗИ С РАСХОДЯЩИМИСЯ КРУГАМИ -->
+  <button class="floating-callback-btn" id="floatingCallbackBtn" aria-label="Online-запись">
+    <div class="ripple-wave"></div>
+    <div class="ripple-wave"></div>
+    <span class="callback-btn-text">онлайн-<br>запись</span>
+  </button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // 1. БУРГЕР МЕНЮ И НАВИГАЦИЯ
+      const burgerBtn = document.getElementById('burgerBtn');
+      const navOverlay = document.getElementById('navOverlay');
+      const navBackBtn = document.getElementById('navBackBtn');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      function toggleMenu() {
+        burgerBtn.classList.toggle('active');
+        navOverlay.classList.toggle('open');
+        document.body.style.overflow = navOverlay.classList.contains('open') ? 'hidden' : '';
+      }
+
+      burgerBtn.addEventListener('click', toggleMenu);
+      navBackBtn.addEventListener('click', toggleMenu);
+
+      navOverlay.addEventListener('click', (e) => {
+        if (e.target === navOverlay) {
+          toggleMenu();
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          toggleMenu();
+        });
+      });
+
+      // 2. ПОП-АП
+      const bookingModal = document.getElementById('bookingModal');
+      const modalClose = document.getElementById('modalClose');
+
+      window.openBookingModal = function () {
+        if (bookingModal) {
+          bookingModal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      };
+
+      function closeModal() {
+        if (bookingModal) {
+          bookingModal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+
+      if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+      }
+
+      if (bookingModal) {
+        bookingModal.addEventListener('click', (e) => {
+          if (e.target === bookingModal) {
+            closeModal();
+          }
+        });
+      }
+
+      const openModalBtns = document.querySelectorAll('.open-booking-btn');
+      openModalBtns.forEach(btn => {
+        btn.addEventListener('click', openBookingModal);
+      });
+
+      const floatBtn = document.getElementById('floatingCallbackBtn');
+      if (floatBtn) {
+        floatBtn.addEventListener('click', openBookingModal);
+      }
+
+      // 3. КАРТА
+      const mapContainer = document.getElementById('mapContainer');
+      const mapIframe = mapContainer.querySelector('.map-iframe');
+
+      mapContainer.addEventListener('click', function loadMap() {
+        if (!mapContainer.classList.contains('loaded')) {
+          const src = mapIframe.getAttribute('data-src');
+          mapIframe.setAttribute('src', src);
+          mapContainer.classList.add('loaded');
+        }
+      });
+    });
+  </script>
+</body>
