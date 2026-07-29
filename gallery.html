@@ -6,12 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Галерея работ — Студия красоты и косметологии АнНи</title>
   <style>
-
-  
-
     /* --- CSS ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ --- */
     :root {
-      --primary-color: #23403C; /* ИЗМЕНЕНО: Новый зеленый цвет */
+      --primary-color: #23403C;
+      /* ИЗМЕНЕНО: Новый зеленый цвет */
       --primary-rgb: 35, 64, 60;
       --text-color: #333333;
       --light-bg: #F4F6F7;
@@ -238,7 +236,8 @@
       text-transform: uppercase;
       color: var(--primary-color);
       margin-bottom: 35px;
-      text-align: left; /* ИЗМЕНЕНО: По центру */
+      text-align: left;
+      /* ИЗМЕНЕНО: По центру */
     }
 
     /* --- ВКЛАДКИ (ФИЛЬТРЫ) --- */
@@ -297,10 +296,11 @@
       background-color: transparent !important;
       box-shadow: none;
       break-inside: avoid;
-      -webkit-column-break-inside: avoid; /* Safari fallback */
+      -webkit-column-break-inside: avoid;
+      /* Safari fallback */
       margin-bottom: 15px;
       display: none;
-      
+
       /* ПОПРАВКА: Запрещает Safari выкидывать видео за пределы макета */
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
@@ -322,7 +322,7 @@
       display: block;
       border-radius: 20px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      
+
       /* ПОПРАВКА: Запрещает сдвиги во время воспроизведения на iOS */
       -webkit-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0);
@@ -431,6 +431,7 @@
       text-shadow: none !important;
       border-radius: 15px !important;
     }
+
     .map-overlay-card .btn-gold-gradient:active {
       opacity: 0.9 !important;
     }
@@ -452,6 +453,7 @@
       border-radius: 15px;
       transition: var(--transition-smooth);
     }
+
     .btn-submit:active {
       background-color: rgba(255, 255, 255, 0.9) !important;
     }
@@ -459,24 +461,27 @@
     /* --- ЕДИНЫЕ ОБНОВЛЕННЫЕ СТИЛИ КОНТАКТОВ И ЧЕРНО-БЕЛОЙ КАРТЫ С ОСТРОВКОМ ДЛЯ ВСЕХ СТРАНИЦ --- */
     /* --- КОНТАКТЫ (ОБНОВЛЕНО: ВЫРАВНИВАНИЕ ПО ЛЕВОМУ КРАЮ) --- */
     .contacts {
-      padding: 60px 20px 0px; 
+      padding: 60px 20px 0px;
       background-color: var(--white);
     }
 
     .contacts-row {
       display: flex;
-      justify-content: flex-start; /* Выравнивание контейнера по левому краю */
+      justify-content: flex-start;
+      /* Выравнивание контейнера по левому краю */
       align-items: stretch;
       gap: 15px;
       margin-bottom: 30px;
     }
 
     .contacts-text-side {
-      flex: 0 0 100%; 
-      text-align: left; /* Текст прижат к левому краю */
+      flex: 0 0 100%;
+      text-align: left;
+      /* Текст прижат к левому краю */
       display: flex;
       flex-direction: column;
-      align-items: flex-start; /* Элементы внутри колонки прижаты влево */
+      align-items: flex-start;
+      /* Элементы внутри колонки прижаты влево */
     }
 
     .contacts-sub-title-main {
@@ -485,12 +490,14 @@
       color: var(--primary-color);
       text-transform: uppercase;
       margin-bottom: 25px;
-      text-align: left; /* Заголовок прижат влево */
+      text-align: left;
+      /* Заголовок прижат влево */
     }
 
     .info-item {
       margin-bottom: 18px;
-      text-align: left; /* Текст пунктов прижат влево */
+      text-align: left;
+      /* Текст пунктов прижат влево */
     }
 
     .info-label {
@@ -498,7 +505,8 @@
       color: #777;
       margin-bottom: 4px;
       line-height: 1.3;
-      text-align: left; /* Подписи прижаты влево */
+      text-align: left;
+      /* Подписи прижаты влево */
     }
 
     .info-value {
@@ -506,7 +514,8 @@
       color: var(--primary-color);
       font-weight: 500;
       line-height: 1.4;
-      text-align: left; /* Значения прижаты влево */
+      text-align: left;
+      /* Значения прижаты влево */
     }
 
     .contacts-phones {
@@ -514,11 +523,13 @@
       flex-direction: column;
       gap: 4px;
       margin-top: 5px;
-      align-items: flex-start; /* Номера телефонов выровнены по левому краю */
+      align-items: flex-start;
+      /* Номера телефонов выровнены по левому краю */
     }
 
     .contacts-logo-img {
-      max-width: 160px; /* Крупный размер лого */
+      max-width: 160px;
+      /* Крупный размер лого */
       height: auto;
       display: block;
       margin: 25px auto 0;
@@ -532,13 +543,15 @@
 
     /* Карта растянута во весь экран без боковых зазоров и рамок */
     .map-container {
-      width: calc(100% + 40px); /* Вылазит за пределы паддинга родителя */
+      width: calc(100% + 40px);
+      /* Вылазит за пределы паддинга родителя */
       margin-left: -20px;
       margin-right: -20px;
       height: 400px;
       position: relative;
       overflow: hidden;
-      border-radius: 0px; /* Убрано скругление для плотного соприкосновения */
+      border-radius: 0px;
+      /* Убрано скругление для плотного соприкосновения */
       box-shadow: none;
     }
 
@@ -553,7 +566,7 @@
       background-color: var(--white);
       border-radius: 20px;
       padding: 24px 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
       z-index: 5;
       text-align: center;
     }
@@ -596,7 +609,8 @@
       left: 0;
       z-index: 1;
       opacity: 0.95;
-      filter: grayscale(100%) invert(8%) contrast(90%); /* Карта сделана черно-белой */
+      filter: grayscale(100%) invert(8%) contrast(90%);
+      /* Карта сделана черно-белой */
       -webkit-filter: grayscale(100%) invert(8%) contrast(90%);
     }
 
@@ -733,7 +747,8 @@
       width: 68px;
       height: 68px;
       border-radius: 50%;
-      background-color: rgba(35, 64, 60, 0.85); /* ИЗМЕНЕНО: Новый зеленый цвет */
+      background-color: rgba(35, 64, 60, 0.85);
+      /* ИЗМЕНЕНО: Новый зеленый цвет */
       border: none;
       color: var(--white);
       display: flex;
@@ -768,9 +783,19 @@
     }
 
     @keyframes rippleAnimation {
-      0% { transform: scale(1); opacity: 0.8; }
-      50% { opacity: 0.5; }
-      100% { transform: scale(2.2); opacity: 0; }
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
     }
 
     .callback-btn-text {
@@ -988,22 +1013,22 @@
   <!-- КОНТАКТЫ, ФОТО САЛОНА, ЧЕРНО-БЕЛАЯ КАРТА С ОСТРОВКОМ СВЕРХУ СЛЕВА И ФУТЕР -->
   <!-- ЕДИНЫЕ КОНТАКТЫ, КАРТА С ОСТРОВКОМ И НИЖНИЙ ФУТЕР (ВСТАВИТЬ ВО ВСЕ ФАЙЛЫ) -->
   <!-- ЕДИНЫЕ КОНТАКТЫ, КАРТА С ОСТРОВКОМ И НИЖНИЙ ФУТЕР (ВСТАВИТЬ ВО ВСЕ ФАЙЛЫ) -->
-   <!-- КОНТАКТЫ (ЛОГОТИП УБРАН) -->
+  <!-- КОНТАКТЫ (ЛОГОТИП УБРАН) -->
   <section class="contacts" id="contacts">
     <div class="contacts-row">
       <div class="contacts-text-side">
         <h3 class="contacts-sub-title-main">Контакты</h3>
-        
+
         <div class="info-item">
           <div class="info-label">Студия красоты и косметологии "Анни"</div>
           <div class="info-value">г. Санкт-Петербург, ул. Маршала Захарова, 62/1</div>
         </div>
-        
+
         <div class="info-item">
           <div class="info-label">Время работы:</div>
           <div class="info-value">Ежедневно с 10:00 до 21:00</div>
         </div>
-        
+
         <div class="info-item">
           <div class="info-label">Телефон:</div>
           <div class="contacts-phones">
@@ -1013,15 +1038,17 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Карта с точкой организации АнНи -->
     <div class="map-container" id="mapContainer">
-      <iframe class="map-iframe" src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm" width="100%" height="350" frameborder="0"></iframe>
-      
+      <iframe class="map-iframe"
+        src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm"
+        width="100%" height="350" frameborder="0" loading="lazy"></iframe>
+
       <div class="map-overlay-card">
         <h4>Будем рады<br>видеть вас в нашей студии!</h4>
         <p>Ваше место заботы о себе. Выберите удобное время для визита</p>
-        <button class="btn-cta open-booking-btn btn-gold-gradient">Записаться</button>
+        <button class="btn-cta open-booking-btn btn-gold-gradient">ЗАПИСАТЬСЯ</button>
       </div>
     </div>
   </section>
@@ -1042,7 +1069,9 @@
       </div>
       <div class="footer-contacts-col">
         <!-- Физический адрес добавлен в нижнюю часть -->
-        <span class="footer-address-text" style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 5px; display: block;">ул. Маршала Захарова, 62/1</span>
+        <span class="footer-address-text"
+          style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 5px; display: block;">ул. Маршала Захарова,
+          62/1</span>
         <a href="tel:+79312440340">+7 (931) 244-03-40</a>
         <a href="tel:+78123687547">+7 (812) 368-75-47</a>
         <a href="mailto:anni-studio@mail.ru" class="footer-email">anni-studio@mail.ru</a>
@@ -1193,17 +1222,6 @@
         floatBtn.addEventListener('click', openBookingModal);
       }
 
-      // 4. ЛЕНИВАЯ ЗАГРУЗКА ЯНДЕКС КАРТЫ
-      const mapContainer = document.getElementById('mapContainer');
-      const mapIframe = mapContainer.querySelector('.map-iframe');
-
-      mapContainer.addEventListener('click', function loadMap() {
-        if (!mapContainer.classList.contains('loaded')) {
-          const src = mapIframe.getAttribute('data-src');
-          mapIframe.setAttribute('src', src);
-          mapContainer.classList.add('loaded');
-        }
-      });
     });
   </script>
 

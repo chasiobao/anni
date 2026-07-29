@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>О нас — Студия красоты и косметологии АнНи</title>
   <style>
-  
     /* --- CSS ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ --- */
     :root {
       --primary-color: #23403C;
@@ -17,6 +16,14 @@
       --white: #FFFFFF;
       --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
       --font-stack: -apple-system, BlinkMacSystemFont, "SF Compact Text", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    @font-face {
+      font-family: 'Orchidea Pro Medium';
+      src: url('OrchideaPro-Medium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
     }
 
     * {
@@ -355,37 +362,46 @@
     /* ИЗМЕНЕНО: Золотые градиентные овальные кнопки */
     /* --- КНОПКИ НА БЕЛОМ ФОНЕ (СТАНОВЯТСЯ ЗЕЛЕНЫМИ С БЕЛЫМ ТЕКСТОМ) --- */
     .map-overlay-card .btn-gold-gradient {
-      background: var(--primary-color) !important;
+      display: block !important;
+      text-align: center !important;
+      width: 100%;
+      padding: 12px;
+      font-size: 0.8rem;
+      border-radius: 15px !important;
+      /* Прямоугольная как другие кнопки */
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
       color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
-      text-shadow: none !important;
-      border-radius: 15px !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
     }
+
     .map-overlay-card .btn-gold-gradient:active {
       opacity: 0.9 !important;
     }
 
-    /* --- КНОПКИ НА ЗЕЛЕНОМ ФОНЕ (СТАНОВЯТСЯ БЕЛЫМИ С ЗЕЛЕНЫМ ТЕКСТОМ) --- */
+    /* --- КНОПКИ НА ЗЕЛЕНОМ ФОНЕ (СТАНОВЯТСЯ СТАНДАРТНЫМИ ЗОЛОТЫМИ) --- */
     .btn-submit {
       width: 100%;
-      background: var(--white) !important;
-      color: var(--primary-color) !important;
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
+      color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-      text-shadow: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
       padding: 16px;
       font-size: 0.95rem;
       text-transform: uppercase;
       font-weight: 600;
       margin-top: 10px;
       cursor: pointer;
-      border-radius: 15px;
+      border-radius: 15px !important;
       transition: var(--transition-smooth);
     }
+
     .btn-submit:active {
-      background-color: rgba(255, 255, 255, 0.9) !important;
+      opacity: 0.9 !important;
     }
+
     /* --- КОНТАКТЫ (ИЗМЕНЕНО: НОВЫЙ ФОРМАТ С ЦЕНТРИРОВАНИЕМ) --- */
     /* --- ЕДИНЫЕ ОБНОВЛЕННЫЕ СТИЛИ КОНТАКТОВ И ЧЕРНО-БЕЛОЙ КАРТЫ С ОСТРОВКОМ ДЛЯ ВСЕХ СТРАНИЦ --- */
     /* --- КОНТАКТЫ (ОБНОВЛЕНО: ВЫРАВНИВАНИЕ ПО ЛЕВОМУ КРАЮ) --- */
@@ -522,12 +538,13 @@
       width: 100%;
       padding: 12px;
       font-size: 0.8rem;
-      border-radius: 12px;
-      background: var(--primary-color) !important;
+      border-radius: 15px !important;
+      /* Скругление 15px как у других кнопок */
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
       color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
-      text-shadow: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
     }
 
     .map-iframe {
@@ -738,6 +755,23 @@
       position: relative;
       z-index: 3;
     }
+
+    .page-title,
+    .about-section-title,
+    .stat-number,
+    .consultation h3,
+    .contacts-sub-title-main,
+    .map-overlay-card h4,
+    .modal h3 {
+      font-family: 'Orchidea Pro Medium', var(--font-stack) !important;
+      font-weight: 500 !important;
+    }
+
+    /* Единый размер шрифта для всех кнопок на странице О нас */
+    .btn-submit,
+    .map-overlay-card .btn-gold-gradient {
+      font-size: 0.9rem !important;
+    }
   </style>
 </head>
 
@@ -843,17 +877,17 @@
     <div class="contacts-row">
       <div class="contacts-text-side">
         <h3 class="contacts-sub-title-main">Контакты</h3>
-        
+
         <div class="info-item">
           <div class="info-label">Студия красоты и косметологии "Анни"</div>
           <div class="info-value">г. Санкт-Петербург, ул. Маршала Захарова, 62/1</div>
         </div>
-        
+
         <div class="info-item">
           <div class="info-label">Время работы:</div>
           <div class="info-value">Ежедневно с 10:00 до 21:00</div>
         </div>
-        
+
         <div class="info-item">
           <div class="info-label">Телефон:</div>
           <div class="contacts-phones">
@@ -863,14 +897,16 @@
         </div>
       </div>
     </div>
-    
+
     <div class="map-container" id="mapContainer">
-      <iframe class="map-iframe" src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm" width="100%" height="350" frameborder="0"></iframe>
-      
+      <iframe class="map-iframe"
+        src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm"
+        width="100%" height="350" frameborder="0" loading="lazy"></iframe>
+
       <div class="map-overlay-card">
         <h4>Будем рады<br>видеть вас в нашей студии!</h4>
         <p>Ваше место заботы о себе. Выберите удобное время для визита</p>
-        <button class="btn-cta open-booking-btn btn-gold-gradient">Записаться</button>
+        <button class="btn-cta open-booking-btn btn-gold-gradient">ЗАПИСАТЬСЯ</button>
       </div>
     </div>
   </section>
@@ -919,7 +955,7 @@
         </div>
         <div class="form-group">
           <select class="form-select">
-            <option value="" disabled selected>Какая услуер интересует</option>
+            <option value="" disabled selected>Какая услуга интересует</option>
             <option value="hair">Парикмахерский зал</option>
             <option value="nails">Ногтевой сервис</option>
             <option value="body">Косметология тела</option>
@@ -930,13 +966,6 @@
       </form>
     </div>
   </div>
-
-  <!-- КНОПКА ОБРАТНОЙ СВЯЗИ С РАСХОДЯЩИМИСЯ КРУГАМИ -->
-  <button class="floating-callback-btn" id="floatingCallbackBtn" aria-label="Онлайн-запись">
-    <div class="ripple-wave"></div>
-    <div class="ripple-wave"></div>
-    <span class="callback-btn-text">онлайн-<br>запись</span>
-  </button>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -1008,17 +1037,6 @@
         floatBtn.addEventListener('click', openBookingModal);
       }
 
-      // 3. ЛЕНИВАЯ ЗАГРУЗКА ЯНДЕКС КАРТЫ
-      const mapContainer = document.getElementById('mapContainer');
-      const mapIframe = mapContainer.querySelector('.map-iframe');
-
-      mapContainer.addEventListener('click', function loadMap() {
-        if (!mapContainer.classList.contains('loaded')) {
-          const src = mapIframe.getAttribute('data-src');
-          mapIframe.setAttribute('src', src);
-          mapContainer.classList.add('loaded');
-        }
-      });
     });
   </script>
 
