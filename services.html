@@ -17,6 +17,14 @@
       --font-stack: -apple-system, BlinkMacSystemFont, "SF Compact Text", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     }
 
+    @font-face {
+      font-family: 'Orchidea Pro Medium';
+      src: url('OrchideaPro-Medium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -276,18 +284,18 @@
       padding: 0 4px;
     }
 
-    /* --- КНОПКИ НА БЕЛОМ ФОНЕ (СТАНОВЯТСЯ ЗЕЛЕНЫМИ С БЕЛЫМ ТЕКСТОМ) --- */
+    /* --- КНОПКИ НА БЕЛОМ ФОНЕ (СТАНОВЯТСЯ ЗОЛОТЫМИ С БЕЛЫМ ТЕКСТОМ) --- */
     .btn-services-prices.btn-gold-gradient,
     .btn-services-prices,
     .map-overlay-card .btn-gold-gradient {
       display: flex !important;
       justify-content: space-between !important;
       align-items: center !important;
-      background: var(--primary-color) !important;
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
       color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
-      text-shadow: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
       padding: 15px 20px !important;
       font-size: 0.88rem !important;
       font-weight: 600 !important;
@@ -328,16 +336,16 @@
       opacity: 0.85 !important;
     }
 
-    /* --- КНОПКА НА ЗЕЛЕНОМ ФОНЕ ФОРМЫ (СТАНОВИТСЯ БЕЛОЙ С ЗЕЛЕНЫМ ТЕКСТОМ) --- */
+    /* --- КНОПКА НА ЗЕЛЕНОМ ФОНЕ ФОРМЫ (СТАНОВИТСЯ СТАНДАРТНОЙ ЗОЛОТОЙ) --- */
     .btn-submit {
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
-      background: var(--white) !important;
-      color: var(--primary-color) !important;
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
+      color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-      text-shadow: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
       padding: 16px !important;
       font-size: 0.95rem !important;
       text-transform: uppercase !important;
@@ -350,7 +358,7 @@
     }
 
     .btn-submit:active {
-      background-color: rgba(255, 255, 255, 0.9) !important;
+      opacity: 0.9 !important;
     }
 
     .service-block-btn-row {
@@ -636,17 +644,18 @@
       line-height: 1.35;
     }
 
-    /* Кнопка на островке карты (зеленая) */
+    /* Кнопка на островке карты (золотая стандартная) */
     .map-overlay-card .btn-gold-gradient {
       width: 100%;
       padding: 12px;
       font-size: 0.8rem;
-      border-radius: 12px;
-      background: var(--primary-color) !important;
+      border-radius: 15px !important;
+      /* Прямоугольная как другие кнопки */
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
       color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
-      text-shadow: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
     }
 
     .map-iframe {
@@ -854,6 +863,24 @@
       text-align: center;
       position: relative;
       z-index: 3;
+    }
+
+    /* Применение шрифта Orchidea Pro Medium ко всем заголовкам страницы Услуги */
+    .page-title,
+    .promo-banner-title,
+    .consultation h3,
+    .contacts-sub-title-main,
+    .map-overlay-card h4,
+    .modal h3 {
+      font-family: 'Orchidea Pro Medium', var(--font-stack) !important;
+      font-weight: 500 !important;
+    }
+
+    /* Единый размер шрифта для всех кнопок на странице Услуги */
+    .btn-services-prices,
+    .map-overlay-card .btn-gold-gradient,
+    .btn-submit {
+      font-size: 0.9rem !important;
     }
   </style>
 </head>
@@ -1065,7 +1092,7 @@
     <div class="map-container" id="mapContainer">
       <iframe class="map-iframe"
         src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm"
-        width="100%" height="350" frameborder="0"></iframe>
+        width="100%" height="350" frameborder="0" loading="lazy"></iframe>
 
       <div class="map-overlay-card">
         <h4>Будем рады<br>видеть вас в нашей студии!</h4>
@@ -1131,7 +1158,8 @@
   </div>
 
   <!-- КНОПКА ОБРАТНОЙ СВЯЗИ С РАСХОДЯЩИМИСЯ КРУГАМИ -->
-  <button class="floating-callback-btn" id="floatingCallbackBtn" aria-label="Online-запись">
+  <button class="floating-callback-btn" id="floatingCallbackBtn" aria-label="Online-запись onclick="
+    openBookingModal()">
     <div class="ripple-wave"></div>
     <div class="ripple-wave"></div>
     <span class="callback-btn-text">онлайн-<br>запись</span>
@@ -1207,17 +1235,6 @@
         floatBtn.addEventListener('click', openBookingModal);
       }
 
-      // 3. КАРТА
-      const mapContainer = document.getElementById('mapContainer');
-      const mapIframe = mapContainer.querySelector('.map-iframe');
-
-      mapContainer.addEventListener('click', function loadMap() {
-        if (!mapContainer.classList.contains('loaded')) {
-          const src = mapIframe.getAttribute('data-src');
-          mapIframe.setAttribute('src', src);
-          mapContainer.classList.add('loaded');
-        }
-      });
     });
   </script>
 </body>

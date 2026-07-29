@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Цены — Студия красоты и косметологии АнНи</title>
   <style>
-  
     /* --- CSS ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ --- */
     :root {
       --primary-color: #23403C;
@@ -16,6 +15,14 @@
       --white: #FFFFFF;
       --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
       --font-stack: -apple-system, BlinkMacSystemFont, "SF Compact Text", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    @font-face {
+      font-family: 'Orchidea Pro Medium';
+      src: url('OrchideaPro-Medium.otf') format('opentype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
     }
 
     * {
@@ -425,19 +432,19 @@
       text-shadow: none !important;
       border-radius: 15px !important;
     }
+
     .map-overlay-card .btn-gold-gradient:active {
       opacity: 0.9 !important;
     }
 
-    /* --- КНОПКИ НА ЗЕЛЕНОМ ФОНЕ (СТАНОВЯТСЯ БЕЛЫМИ С ЗЕЛЕНЫМ ТЕКСТОМ) --- */
-    .btn-submit,
-    .btn-promo-banner {
+    /* --- КНОПКА ОТПРАВКИ ЗАЯВКИ (СТАНОВИТСЯ ЗОЛОТОЙ) --- */
+    .btn-submit {
       width: 100%;
-      background: var(--white) !important;
-      color: var(--primary-color) !important;
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
+      color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-      text-shadow: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
       border-radius: 15px !important;
       padding: 16px;
       font-size: 0.95rem;
@@ -447,9 +454,9 @@
       cursor: pointer;
       transition: var(--transition-smooth);
     }
-    .btn-submit:active,
-    .btn-promo-banner:active {
-      background-color: rgba(255, 255, 255, 0.9) !important;
+
+    .btn-submit:active {
+      opacity: 0.9 !important;
     }
 
     /* --- КОНТАКТЫ (ОБНОВЛЕНО) --- */
@@ -563,17 +570,18 @@
       line-height: 1.35;
     }
 
-    /* Кнопка на островке карты (зеленая) */
+    /* Кнопка на островке карты (золотая стандартная) */
     .map-overlay-card .btn-gold-gradient {
       width: 100%;
       padding: 12px;
       font-size: 0.8rem;
-      border-radius: 12px;
-      background: var(--primary-color) !important;
+      border-radius: 15px !important;
+      /* Прямоугольная со скруглением 15px */
+      background: linear-gradient(90deg, #A17C43 0%, #D8BE8A 50%, #A17C43 100%) !important;
       color: var(--white) !important;
       border: none !important;
-      box-shadow: 0 4px 15px rgba(35, 64, 60, 0.2) !important;
-      text-shadow: none !important;
+      box-shadow: 0 4px 15px rgba(161, 124, 67, 0.25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
     }
 
     .map-iframe {
@@ -828,6 +836,26 @@
 
     .btn-promo-banner:active {
       opacity: 0.85;
+    }
+
+    /* Применение шрифта Orchidea Pro Medium ко всем заголовкам страницы Цены */
+    .page-title,
+    .acc-header,
+    .acc-header span,
+    .promo-banner-title,
+    .consultation h3,
+    .contacts-sub-title-main,
+    .map-overlay-card h4,
+    .modal h3 {
+      font-family: 'Orchidea Pro Medium', var(--font-stack) !important;
+      font-weight: 500 !important;
+    }
+
+    /* Единый размер шрифта для всех кнопок на странице Цены */
+    .btn-submit,
+    .btn-promo-banner,
+    .map-overlay-card .btn-gold-gradient {
+      font-size: 0.9rem !important;
     }
   </style>
 </head>
@@ -1886,12 +1914,12 @@
     <div class="map-container" id="mapContainer">
       <iframe class="map-iframe"
         src="https://yandex.ru/map-widget/v1/?ll=30.213442%2C59.849596&amp;z=17&amp;pt=30.213442,59.849596,pm2rdm"
-        width="100%" height="350" frameborder="0"></iframe>
+        width="100%" height="350" frameborder="0" loading="lazy"></iframe>
 
       <div class="map-overlay-card">
         <h4>Будем рады<br>видеть вас в нашей студии!</h4>
         <p>Ваше место заботы о себе. Выберите удобное время для визита</p>
-        <button class="btn-cta open-booking-btn btn-gold-gradient">Записаться</button>
+        <button class="btn-cta open-booking-btn btn-gold-gradient">ЗАПИСАТЬСЯ</button>
       </div>
     </div>
   </section>
@@ -1953,7 +1981,8 @@
 
   <!-- КНОПКА ОБРАТНОЙ СВЯЗИ С РАСХОДЯЩИМИСЯ КРУГАМИ -->
   <!-- КНОПКА ОБРАТНОЙ СВЯЗИ С РАСХОДЯЩИМИСЯ КРУГАМИ (ОДИН ИСТОЧНИК И БЕЗОТКАЗНЫЙ ONCLICK) -->
-  <button class="floating-callback-btn" id="floatingCallbackBtn" aria-label="Онлайн-запись" onclick="openBookingModal()">
+  <button class="floating-callback-btn" id="floatingCallbackBtn" aria-label="Онлайн-запись"
+    onclick="openBookingModal()">
     <div class="ripple-wave"></div>
     <div class="ripple-wave"></div>
     <span class="callback-btn-text">онлайн-<br>запись</span>
@@ -2041,18 +2070,6 @@
         btn.addEventListener('click', openBookingModal);
       });
 
-      // 4. ЛЕНИВАЯ ЗАГРУЗКА ЯНДЕКС КАРТЫ
-      const mapContainer = document.getElementById('mapContainer');
-      const mapIframe = mapContainer.querySelector('.map-iframe');
-
-      mapContainer.addEventListener('click', function loadMap() {
-        if (!mapContainer.classList.contains('loaded')) {
-          const src = mapIframe.getAttribute('data-src');
-          mapIframe.setAttribute('src', src);
-          mapContainer.classList.add('loaded');
-        }
-      });
-
       // 5. ОТКРЫТИЕ РАЗДЕЛА ИЗ ХЭША URL (НАПРИМЕР, prices.html#hair)
       function openAccordionByHash() {
         const hash = window.location.hash;
@@ -2061,11 +2078,11 @@
           if (targetItem && targetItem.classList.contains('acc-item')) {
             const header = targetItem.querySelector('.acc-header');
             const content = targetItem.querySelector('.acc-content');
-            
+
             if (header && content) {
               targetItem.classList.add('active');
               content.style.maxHeight = content.scrollHeight + 'px';
-              
+
               setTimeout(() => {
                 const elementPosition = targetItem.getBoundingClientRect().top + window.scrollY;
                 const offsetPosition = elementPosition - 90; // Компенсация фиксированной шапки сайта
@@ -2084,4 +2101,5 @@
     });
   </script>
 </body>
+
 </html>
